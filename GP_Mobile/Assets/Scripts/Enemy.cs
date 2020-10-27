@@ -9,6 +9,5 @@ public abstract class Enemy : MonoBehaviour
     public GameObject player;
 
 
-    public abstract void Search(); // enemy searches player
     public abstract void Attack(); // enemy attacks player
 }

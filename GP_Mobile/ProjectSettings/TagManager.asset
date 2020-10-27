@@ -11,6 +11,7 @@ TagManager:
   - E_patrol_1
   - E_patrol_2
   - PatrolPoints
+  - Sound
   layers:
   - Default
   - TransparentFX

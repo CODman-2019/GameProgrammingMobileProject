@@ -16,6 +16,7 @@ public class BlindEnemy : Enemy
     enum States
     {
         patrol,
+        chase,
         search,
         attack
     }
@@ -25,7 +26,7 @@ public class BlindEnemy : Enemy
     // Start is called before the first frame update
     void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player");
+        //player = GameObject.FindGameObjectWithTag("Player");
 
         currentState = States.patrol;
         patrolPoints = GameObject.FindGameObjectsWithTag("PatrolPoints");
@@ -70,6 +71,12 @@ public class BlindEnemy : Enemy
             AdjustCourse();
             agent.SetDestination(patrolPoints[patrolIndex].transform.position);
         }
+
+        if (Vector3.Distance(transform.position, player.transform.position) < range)
+        {
+            agent.SetDestination(player.transform.position);
+            currentState = States.search;
+        }
     }
 
     void AdjustCourse()
@@ -81,13 +88,20 @@ public class BlindEnemy : Enemy
         else patrolIndex++;
     }
 
-    public override void Search()
+    public void Search()
     {
+        if (Vector3.Distance( transform.position, player.transform.position) < 1.0f)
+        {
 
+        }
     }
 
     public override void Attack()
     {
 
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        
     }
 }
