@@ -10,6 +10,7 @@ TagManager:
   - Ground
   - E_patrol_1
   - E_patrol_2
+  - PatrolPoints
   layers:
   - Default
   - TransparentFX
