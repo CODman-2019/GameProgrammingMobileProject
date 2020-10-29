@@ -20,7 +20,11 @@ public class BlindEnemy : Enemy
         search,
         attack
     }
-     States currentState;
+    States currentState;
+
+    Vector3 lastHeardSpot;
+    bool scan;
+    public float searchDuration;
 
 
     // Start is called before the first frame update
@@ -31,6 +35,7 @@ public class BlindEnemy : Enemy
         currentState = States.patrol;
         patrolPoints = GameObject.FindGameObjectsWithTag("PatrolPoints");
         agent = GetComponent<NavMeshAgent>();
+        scan = false;
 
         patrolIndex = findNearestPoint();
         agent.SetDestination(patrolPoints[patrolIndex].transform.position);
@@ -72,11 +77,6 @@ public class BlindEnemy : Enemy
             agent.SetDestination(patrolPoints[patrolIndex].transform.position);
         }
 
-        if (Vector3.Distance(transform.position, player.transform.position) < range)
-        {
-            agent.SetDestination(player.transform.position);
-            currentState = States.search;
-        }
     }
 
     void AdjustCourse()
@@ -88,11 +88,16 @@ public class BlindEnemy : Enemy
         else patrolIndex++;
     }
 
+    /// <summary>
+    /// go to last position
+    /// wait to hear a few seconds
+    /// if nothing is there return
+    /// </summary>
     public void Search()
     {
-        if (Vector3.Distance( transform.position, player.transform.position) < 1.0f)
+        if (Vector3.Distance(transform.position, lastHeardSpot) < 1.1f)
         {
-
+            StartCoroutine(Hear());
         }
     }
 
@@ -100,8 +105,29 @@ public class BlindEnemy : Enemy
     {
 
     }
+
+    IEnumerator Hear()
+    {
+        yield return new WaitForSeconds(searchDuration);
+        currentState = States.patrol;
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         
+
+        switch (other.tag)
+        {
+            case "Sound":
+                currentState = States.search;
+                lastHeardSpot = other.transform.position;
+                agent.SetDestination(lastHeardSpot);
+            break;
+
+            case "Player":
+                currentState = States.attack;
+            break;
+        }
+
     }
 }
