@@ -1,23 +1,32 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Xml;
 using UnityEditor.Profiling.Memory.Experimental;
 using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.SocialPlatforms;
 
 public class BlindEnemy : Enemy
 {
-    GameObject[] patrolPoints;
+    public Color patrolSense;
+    public Color searchSense;
+    public Color attackSense;
+    Material detectionColor;
+
+    public GameObject[] patrolPoints;
     int patrolIndex;
     NavMeshAgent agent;
+
+    public bool findPatrolPoints;
 
     bool reverse;
 
     enum States
     {
         patrol,
-        chase,
         search,
+        chase,
         attack
     }
     States currentState;
@@ -25,15 +34,18 @@ public class BlindEnemy : Enemy
     Vector3 lastHeardSpot;
     bool scan;
     public float searchDuration;
+    public float rangeDistance;
+    GameObject target;
 
 
     // Start is called before the first frame update
     void Start()
     {
-        //player = GameObject.FindGameObjectWithTag("Player");
+        player = GameObject.FindGameObjectWithTag("Player");
+        detectionColor = GetComponent<Renderer>().material;
 
+        if(findPatrolPoints) patrolPoints = GameObject.FindGameObjectsWithTag("PatrolPoints");
         currentState = States.patrol;
-        patrolPoints = GameObject.FindGameObjectsWithTag("PatrolPoints");
         agent = GetComponent<NavMeshAgent>();
         scan = false;
 
@@ -66,8 +78,10 @@ public class BlindEnemy : Enemy
         {
             case (States.patrol): Patrol(); break;
             case (States.search): Search(); break;
+            case (States.chase): Chase(); break;
             case (States.attack): Attack(); break;
         }
+        AdjustColor();
     }
     public void Patrol()
     {
@@ -77,6 +91,42 @@ public class BlindEnemy : Enemy
             agent.SetDestination(patrolPoints[patrolIndex].transform.position);
         }
 
+    }
+    public void Search()
+    {
+        if (Vector3.Distance(transform.position, lastHeardSpot) < 1.1f)
+        {
+            StartCoroutine(Hear());
+        }
+    }
+    
+    public void Chase()
+    {
+        agent.SetDestination(player.transform.position);
+        
+        if(Vector3.Distance(transform.position, player.transform.position) > rangeDistance)
+        {
+            currentState = States.search;
+        }
+        else if(Vector3.Distance(transform.position, player.transform.position) < 3.0f)
+        {
+            currentState = States.attack;
+        }
+
+    }
+
+    public override void Attack()
+    {
+        if (Vector3.Distance(transform.position, player.transform.position) < 3.0f)
+        {
+            currentState = States.attack;
+            player.GetComponent<PlayerController>().TakeDamage(strength / 2);
+        }
+
+        if (Vector3.Distance(transform.position, player.transform.position) > rangeDistance)
+        {
+            currentState = States.search;
+        }
     }
 
     void AdjustCourse()
@@ -88,34 +138,37 @@ public class BlindEnemy : Enemy
         else patrolIndex++;
     }
 
-    /// <summary>
-    /// go to last position
-    /// wait to hear a few seconds
-    /// if nothing is there return
-    /// </summary>
-    public void Search()
+    void AdjustColor()
     {
-        if (Vector3.Distance(transform.position, lastHeardSpot) < 1.1f)
+        switch (currentState)
         {
-            StartCoroutine(Hear());
+            case States.patrol:
+                detectionColor.color = patrolSense;
+                break;
+            case States.search:
+                detectionColor.color = searchSense;
+                break;
+            case States.attack:
+                detectionColor.color = attackSense;
+                break;
+
         }
     }
 
-    public override void Attack()
-    {
-
-    }
 
     IEnumerator Hear()
     {
         yield return new WaitForSeconds(searchDuration);
-        currentState = States.patrol;
+        if(currentState != States.attack)
+        {
+            currentState = States.patrol;
+            agent.SetDestination(patrolPoints[patrolIndex].transform.position);
+        }
     }
 
     private void OnTriggerEnter(Collider other)
     {
         
-
         switch (other.tag)
         {
             case "Sound":
@@ -126,8 +179,10 @@ public class BlindEnemy : Enemy
 
             case "Player":
                 currentState = States.attack;
+                agent.SetDestination(player.transform.position);
             break;
         }
 
     }
+    
 }

@@ -6,11 +6,13 @@ using UnityEngine.AI;
 
 public class PlayerController : MonoBehaviour
 {
+    public float Health;
+
     public Camera view;
     public NavMeshAgent agent;
 
-    public float distance;
 
+    public float distance;
     public GameObject heart;
 
     public float heartRate;
@@ -34,11 +36,6 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //if ()
-        //{
-
-        //StartCoroutine(HeartBeat());
-        //}
 
         //Debug.Log(message: agent.pathStatus);
         // if the left mouse button is pressed
@@ -58,26 +55,31 @@ public class PlayerController : MonoBehaviour
 
     }
 
-
-    IEnumerator HeartBeat()
+    public void TakeDamage(float damage)
     {
-        yield return new WaitForSeconds(heartRate);
-        BeatHeart();
-        //StartCoroutine(HeartBeat());
+        Health -= damage;
     }
 
+    public void HealHealth(float heal)
+    {
+        Health += heal;
+    }
+
+    // hearecho code - BeatHeart, CheckBeat, ScaleBeatRange
+    //
+    //Beat 
     void BeatHeart()
     {
         if (!reduceBeat)
         {
             heartBeatRange += beatIncrement;
-            Debug.Log("BEEP");
+           // Debug.Log("BEEP");
         }
         else
         {
 
             heartBeatRange -= beatIncrement;
-            Debug.Log("BOOP");
+           // Debug.Log("BOOP");
         }
             CheckBeat();
     }
@@ -103,9 +105,20 @@ public class PlayerController : MonoBehaviour
         Vector3 temp = transform.localScale;
 
         temp.x = heartBeatRange;
-        temp.y = 0.1f;
+        temp.y = 0.01f;
         temp.z = heartBeatRange;
 
         heart.transform.localScale = temp;
     }
 }
+
+
+    /// --- unused code
+    ///    IEnumerator HeartBeat()
+    //{
+    //    yield return new WaitForSeconds(heartRate);
+    //    BeatHeart();
+    //    //StartCoroutine(HeartBeat());
+    //}
+    /// 
+    ///
