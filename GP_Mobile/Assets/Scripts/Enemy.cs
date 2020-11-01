@@ -6,8 +6,7 @@ public abstract class Enemy : MonoBehaviour
 {
     public float range;
     public float strength;
-    public GameObject player;
-
+    
     
     public abstract void Attack(); // enemy attacks player
 }

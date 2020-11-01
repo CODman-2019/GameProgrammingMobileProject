@@ -57,7 +57,7 @@ public class Gate : MonoBehaviour
                     break;
 
                 case (false):
-                    messasge.text = "door know opened";
+                    messasge.text = "door is now opened";
                     closed = false;
                     break;
             }

@@ -20,16 +20,15 @@ public class PlayerController : MonoBehaviour
     public float hMaxRange;
     public float heartTimer;
     public float beatIncrement;
-    int beatCount;
-    int maxBeatCount;
+    //int beatCount;
+    public int maxBeatCount;
     bool reduceBeat;
 
 
     private void Start()
     {
         reduceBeat = false;
-        beatCount = 0;
-        maxBeatCount = 2;
+       // beatCount = 0;
 
     }
 
@@ -42,9 +41,9 @@ public class PlayerController : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             Ray ray = view.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
+            //RaycastHit hit;
 
-            if (Physics.Raycast(ray, out hit))
+            if (Physics.Raycast(ray, out RaycastHit hit))
             {
                 //if(Vector3.Distance(hit.point, transform.position) < distance )// move the player+ 2.5f
                 agent.SetDestination(hit.point);

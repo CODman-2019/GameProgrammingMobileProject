@@ -17,7 +17,7 @@ public class SmellEnemy : Enemy
     }
 
     states currentState;
-
+    GameObject player;
 
     // Start is called before the first frame update
     void Start()

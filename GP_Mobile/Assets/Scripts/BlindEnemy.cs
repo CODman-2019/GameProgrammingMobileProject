@@ -1,11 +1,6 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
-using System.Xml;
-using UnityEditor.Profiling.Memory.Experimental;
-using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.SocialPlatforms;
 
 public class BlindEnemy : Enemy
 {
@@ -35,7 +30,7 @@ public class BlindEnemy : Enemy
     bool scan;
     public float searchDuration;
     public float rangeDistance;
-    GameObject target;
+    GameObject player;
 
 
     // Start is called before the first frame update
@@ -102,7 +97,6 @@ public class BlindEnemy : Enemy
     
     public void Chase()
     {
-        agent.SetDestination(player.transform.position);
         
         if(Vector3.Distance(transform.position, player.transform.position) > rangeDistance)
         {
@@ -126,6 +120,10 @@ public class BlindEnemy : Enemy
         if (Vector3.Distance(transform.position, player.transform.position) > rangeDistance)
         {
             currentState = States.search;
+        }
+        else
+        {
+            agent.SetDestination(player.transform.position);
         }
     }
 
@@ -177,12 +175,16 @@ public class BlindEnemy : Enemy
                 agent.SetDestination(lastHeardSpot);
             break;
 
-            case "Player":
-                currentState = States.attack;
-                agent.SetDestination(player.transform.position);
-            break;
         }
 
     }
-    
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        { 
+                currentState = States.attack;
+                agent.SetDestination(player.transform.position);
+        }
+    }
+
 }
