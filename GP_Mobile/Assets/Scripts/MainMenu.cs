@@ -4,27 +4,21 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class MainMenu : MonoBehaviour
+public class MainMenu : ButtonManager
 {
     public int tutorial;
     public int techDemo;
     int scenenum;
 
-    private void Update()
-    {
-        if (Input.GetKey(KeyCode.A))
-        {
-            SceneManager.LoadScene(tutorial);
-        }
-        if (Input.GetKey(KeyCode.S))
-        {
-            SceneManager.LoadScene(techDemo);
-        }
 
-        if (Input.GetKey(KeyCode.D))
-        {
-            Quit();
-        }
+    public void Tutorial()
+    {
+        SceneManager.LoadScene(tutorial);
+    }
+
+    public void Demo()
+    {
+        SceneManager.LoadScene(techDemo);
     }
 
     public void ChangeScene()
@@ -32,8 +26,4 @@ public class MainMenu : MonoBehaviour
         SceneManager.LoadScene(scenenum);
     }
 
-    public void Quit()
-    {
-        Application.Quit();
-    }
 }

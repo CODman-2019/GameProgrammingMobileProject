@@ -614,6 +614,10 @@ PrefabInstance:
       propertyPath: findPatrolPoints
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 707632396696934170, guid: 44b0c6659d90ca6478b1ca813c81045d, type: 3}
+      propertyPath: loopPath
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 707632396696934175, guid: 44b0c6659d90ca6478b1ca813c81045d, type: 3}
       propertyPath: m_LocalPosition.x
       value: 21.13
@@ -674,7 +678,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3494783955895983136, guid: 10d6f7a38c5c5234288aec2f0e38e9ed, type: 3}
       propertyPath: sceneNum
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 3494783955895983139, guid: 10d6f7a38c5c5234288aec2f0e38e9ed, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1113,6 +1117,10 @@ PrefabInstance:
       propertyPath: findPatrolPoints
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 707632396696934170, guid: 44b0c6659d90ca6478b1ca813c81045d, type: 3}
+      propertyPath: loopPath
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 707632396696934175, guid: 44b0c6659d90ca6478b1ca813c81045d, type: 3}
       propertyPath: m_LocalPosition.x
       value: 7.89
@@ -1506,6 +1514,10 @@ PrefabInstance:
       propertyPath: findPatrolPoints
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 707632396696934170, guid: 44b0c6659d90ca6478b1ca813c81045d, type: 3}
+      propertyPath: loopPath
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 707632396696934175, guid: 44b0c6659d90ca6478b1ca813c81045d, type: 3}
       propertyPath: m_LocalPosition.x
       value: 28.11858
@@ -1726,6 +1738,10 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 401916479}
+    - target: {fileID: 707632396696934170, guid: 44b0c6659d90ca6478b1ca813c81045d, type: 3}
+      propertyPath: loopPath
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 707632396696934175, guid: 44b0c6659d90ca6478b1ca813c81045d, type: 3}
       propertyPath: m_LocalPosition.x
       value: 4.707302
@@ -2101,7 +2117,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1685122666}
-  m_LocalRotation: {x: 0.19688419, y: -0.6791441, z: 0.19688421, w: 0.679144}
+  m_LocalRotation: {x: 0.1968842, y: -0.679144, z: 0.19688417, w: 0.6791441}
   m_LocalPosition: {x: -3.5873308, y: 7.83, z: -14.973863}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -2199,10 +2215,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'The growing and shrinking circle is your heart Echo.
+  m_text: 'The growing and shrinking circle is your sound ring.
 
-    It will grow
-    and shink as you play.'
+    this tells you
+    where the noise you make go'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -2338,7 +2354,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1856351338}
-  m_LocalRotation: {x: 0.19688419, y: -0.6791441, z: 0.19688421, w: 0.679144}
+  m_LocalRotation: {x: 0.1968842, y: -0.679144, z: 0.19688417, w: 0.6791441}
   m_LocalPosition: {x: -3.5873308, y: 7.83, z: -14.973863}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:

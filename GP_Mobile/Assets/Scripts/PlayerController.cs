@@ -11,9 +11,9 @@ public class PlayerController : MonoBehaviour
     public Camera view;
     public NavMeshAgent agent;
 
-
     public float distance;
     public GameObject heart;
+    public Vector3 startPos;
 
     public float heartRate;
     float heartBeatRange;
@@ -28,13 +28,16 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         reduceBeat = false;
-       // beatCount = 0;
+        // beatCount = 0;
+
+        startPos = gameObject.transform.position;
 
     }
 
     // Update is called once per frame
     void Update()
     {
+       
 
         //Debug.Log(message: agent.pathStatus);
         // if the left mouse button is pressed
@@ -57,6 +60,12 @@ public class PlayerController : MonoBehaviour
     public void TakeDamage(float damage)
     {
         Health -= damage;
+
+        if(Health < 0)
+        {
+            //GameManager.control.level = 
+            GameManager.control.ReturnToHub();
+        }
     }
 
     public void HealHealth(float heal)
@@ -65,22 +74,22 @@ public class PlayerController : MonoBehaviour
     }
 
     // hearecho code - BeatHeart, CheckBeat, ScaleBeatRange
-    //
-    //Beat 
+
+    //Beat
     void BeatHeart()
     {
         if (!reduceBeat)
         {
             heartBeatRange += beatIncrement;
-           // Debug.Log("BEEP");
+            // Debug.Log("BEEP");
         }
         else
         {
 
             heartBeatRange -= beatIncrement;
-           // Debug.Log("BOOP");
+            // Debug.Log("BOOP");
         }
-            CheckBeat();
+        CheckBeat();
     }
 
     void CheckBeat()
@@ -89,13 +98,13 @@ public class PlayerController : MonoBehaviour
         {
             reduceBeat = true;
         }
-        if(heartBeatRange < 0)
+        if (heartBeatRange < 0)
         {
             reduceBeat = false;
             //beatCount++;
         }
 
-            ScaleBeatRange();
+        ScaleBeatRange();
 
     }
 
@@ -112,12 +121,12 @@ public class PlayerController : MonoBehaviour
 }
 
 
-    /// --- unused code
-    ///    IEnumerator HeartBeat()
-    //{
-    //    yield return new WaitForSeconds(heartRate);
-    //    BeatHeart();
-    //    //StartCoroutine(HeartBeat());
-    //}
-    /// 
+/// --- unused code
+///    IEnumerator HeartBeat()
+//{
+//    yield return new WaitForSeconds(heartRate);
+//    BeatHeart();
+//    //StartCoroutine(HeartBeat());
+//}
+/// 
     ///

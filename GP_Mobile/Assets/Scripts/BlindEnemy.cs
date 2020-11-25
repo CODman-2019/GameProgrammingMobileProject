@@ -120,6 +120,7 @@ public class BlindEnemy : Enemy
         if (Vector3.Distance(transform.position, player.transform.position) > rangeDistance)
         {
             currentState = States.search;
+            StartCoroutine(Hear());
         }
         else
         {
@@ -127,13 +128,33 @@ public class BlindEnemy : Enemy
         }
     }
 
+    // get a new point from the patol index
     void AdjustCourse()
     {
-        if(patrolIndex == patrolPoints.Length - 1) reverse = true;
-        if (patrolIndex == 0) reverse = false;
+        
+            //if the index is on the last point
+            if(patrolIndex == patrolPoints.Length - 1)
+            {
+                //if the enemy is going to loop around
+                if (loopPath)
+                {
+                //setthe index point to before the start point
+                    patrolIndex = -1;
 
-        if (reverse) patrolIndex--;
-        else patrolIndex++;
+                }
+                //if it will not loop then activate the reverse
+                else
+                {
+                    reverse = true;
+                }
+            }
+            //if it reaches the first point then flip reverse
+            if (patrolIndex == 0) reverse = false;
+      
+            //if the enemy is going back, go back one point
+            if (reverse && !loopPath) patrolIndex--;
+            else patrolIndex++;
+
     }
 
     void AdjustColor()
@@ -173,18 +194,14 @@ public class BlindEnemy : Enemy
                 currentState = States.search;
                 lastHeardSpot = other.transform.position;
                 agent.SetDestination(lastHeardSpot);
+                break;
+            case "Player":
+                currentState = States.attack;
+                agent.SetDestination(player.transform.position);
             break;
 
         }
 
-    }
-    private void OnTriggerStay(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        { 
-                currentState = States.attack;
-                agent.SetDestination(player.transform.position);
-        }
     }
 
 }
