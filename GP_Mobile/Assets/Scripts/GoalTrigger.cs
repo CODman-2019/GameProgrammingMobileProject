@@ -5,13 +5,23 @@ using UnityEngine.SceneManagement;
 
 public class GoalTrigger : MonoBehaviour
 {
-    public int sceneNum;
+    //public int sceneNum;
+    public bool ToMainMenu;
+    public bool ToNextLevel;
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            SceneManager.LoadScene(sceneNum);
+            //SceneManager.LoadScene(sceneNum);
+            if (ToMainMenu)
+            {
+                GameManager.control.ToMainMenu();
+            }
+            if (ToNextLevel)
+            {
+                GameManager.control.GoToNextLevel();
+            }
         }
     }
 }

@@ -63,8 +63,7 @@ public class PlayerController : MonoBehaviour
 
         if(Health < 0)
         {
-            //GameManager.control.level = 
-            GameManager.control.ReturnToHub();
+            GameManager.control.ToMainMenu();
         }
     }
 

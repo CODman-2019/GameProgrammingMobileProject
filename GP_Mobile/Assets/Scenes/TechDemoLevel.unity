@@ -2922,6 +2922,10 @@ PrefabInstance:
       propertyPath: sceneNum
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3494783955895983136, guid: 10d6f7a38c5c5234288aec2f0e38e9ed, type: 3}
+      propertyPath: ToMainMenu
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3494783955895983139, guid: 10d6f7a38c5c5234288aec2f0e38e9ed, type: 3}
       propertyPath: m_LocalPosition.x
       value: -36.9441

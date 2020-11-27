@@ -23,4 +23,19 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/TechDemoLevel.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
+  - enabled: 1
+    path: Assets/Scenes/Level 1.unity
+    guid: fa71f7c94f9767d48b5e7203ba950c0c
+  - enabled: 1
+    path: Assets/Scenes/Level 2.unity
+    guid: d5d351949b3cff744bcb843cce8bbac9
+  - enabled: 1
+    path: Assets/Scenes/Level 3.unity
+    guid: e30247eed725b304dad6080ca4bc01bc
+  - enabled: 1
+    path: Assets/Scenes/Level 4.unity
+    guid: 21b43d81ed7307948b704023c5fcafca
+  - enabled: 1
+    path: Assets/Scenes/Level 5.unity
+    guid: 41fc2dafc1d0c9f49bc1e6f4b54ed2f9
   m_configObjects: {}

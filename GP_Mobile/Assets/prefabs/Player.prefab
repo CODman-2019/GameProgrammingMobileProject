@@ -265,7 +265,6 @@ MonoBehaviour:
   Health: 100
   view: {fileID: 0}
   agent: {fileID: 422114725833113831}
-  soundEcho: 0
   distance: 15
   heart: {fileID: 2397629686832038608}
   startPos: {x: 0, y: 0, z: 0}
@@ -381,10 +380,9 @@ GameObject:
   - component: {fileID: 7949922289414425515}
   - component: {fileID: 1995240181065859868}
   - component: {fileID: 7657867844497990731}
-  - component: {fileID: 579791671593585450}
   m_Layer: 0
   m_Name: Cylinder
-  m_TagString: Untagged
+  m_TagString: Sound
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -397,7 +395,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2397629686832038608}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -0.15, z: 0}
   m_LocalScale: {x: 0.75586, y: 0.19952434, z: 0.75586}
   m_Children: []
   m_Father: {fileID: 422114725833113829}
@@ -460,24 +458,9 @@ CapsuleCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2397629686832038608}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   m_Radius: 0.50000036
   m_Height: 2
   m_Direction: 1
   m_Center: {x: -0.0000037550944, y: 0, z: -0.000000089407095}
---- !u!114 &579791671593585450
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2397629686832038608}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3e23c6feee61b80499aea628dad91c4e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxEchoSize: 5
-  beatTimer: 100
-  echoScale: 1
