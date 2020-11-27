@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//abstract class -- BAD IDEA
 public abstract class Enemy : MonoBehaviour
 {
     public float range;

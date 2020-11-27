@@ -5,19 +5,21 @@ using UnityEngine.SceneManagement;
 
 public class GoalTrigger : MonoBehaviour
 {
-    //public int sceneNum;
+    //variables used for destination
     public bool ToMainMenu;
     public bool ToNextLevel;
 
     private void OnTriggerEnter(Collider other)
     {
+        //if the player hits the trigger
         if (other.CompareTag("Player"))
         {
-            //SceneManager.LoadScene(sceneNum);
+            //if it is set for the main menu have the game manager load the menu screen
             if (ToMainMenu)
             {
                 GameManager.control.ToMainMenu();
             }
+            //if it is set for the next level, load the next scene.
             if (ToNextLevel)
             {
                 GameManager.control.GoToNextLevel();

@@ -108,15 +108,23 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    //methods for changing scenes and quiting application
     public void QuitGame()
     {
         Application.Quit();
     }
 
+    //methods for changeing UI states/screens + scenes
     public void StartGame()
     {
         OnGamePlay();
         SceneManager.LoadScene(MainStart);
+    }
+
+    public void ToTutorial()
+    {
+        OnGamePlay();
+        SceneManager.LoadScene(Tutorial);
     }
 
     public void GoToNextLevel()
@@ -125,7 +133,12 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(currentLevel);
     }
 
-    //methods for changeing UI + states/screens + scenes
+    public void ToDemo()
+    {
+        OnGamePlay();
+        SceneManager.LoadScene(Techdemo);
+    }
+
     public void ToTitle()
     {
         Time.timeScale = 1f;
@@ -134,11 +147,6 @@ public class GameManager : MonoBehaviour
         Save();
     }
 
-    public void ToTutorial()
-    {
-        OnGamePlay();
-        SceneManager.LoadScene(Tutorial);
-    }
 
     public void ToMainMenu()
     {
@@ -149,12 +157,6 @@ public class GameManager : MonoBehaviour
     }
 
 
-    public void ToDemo()
-    {
-        OnGamePlay();
-        SceneManager.LoadScene(Techdemo);
-    }
-
     public void OnGamePlay()
     {
         Time.timeScale = 1f;
@@ -164,11 +166,10 @@ public class GameManager : MonoBehaviour
 
     public void OnPause()
     {
-        Time.timeScale = 0f;
         screen = Screens.Pause;
         ScreenChange();
+        Time.timeScale = 0f;
     }
-
 
 
     //variables to adjust experience and currency

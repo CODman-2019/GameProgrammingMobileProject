@@ -20,16 +20,19 @@ public class Gate : MonoBehaviour
         missing = true;
     }
 
+    //checks if all keys been collected
     void CheckKeys()
     {
         missed = 0;
+
         for(int i = 0; i < keys.Length; i++)
         {
+            //if the key has not been picked up, mark it
             if(!keys[i].GetComponent<Key>().PickedUp())
             {
                 missed++;
             }
-
+            //if all the keys are collected, mark false
             if (i == keys.Length - 1 && missed == 0)
             {
                 missing = false;
@@ -41,21 +44,27 @@ public class Gate : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //if the gate is not closed, move gate
         if(!closed) transform.Translate(open, 0,0);
     }
 
     private void OnTriggerEnter(Collider other)
     {
+        //if the player touches the door
         if (other.CompareTag("Player"))
         {
+            //check the keys
             CheckKeys();
+            //switch based on the missing variable
             switch( missing)
             {
+                //if there are still missing keys, send a message to player
                 case (true):
                     if(missed ==  1) messasge.text = "you are missing a key";
                     else messasge.text = "you are missing "+ missed +" keys"  ;
                     break;
 
+                //if not, chang closed to false
                 case (false):
                     messasge.text = "door is now opened";
                     closed = false;

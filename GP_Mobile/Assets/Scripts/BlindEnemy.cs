@@ -4,6 +4,8 @@ using UnityEngine.AI;
 
 public class BlindEnemy : Enemy
 {
+
+    //variables
     public Color patrolSense;
     public Color searchSense;
     public Color attackSense;
@@ -48,6 +50,7 @@ public class BlindEnemy : Enemy
         agent.SetDestination(patrolPoints[patrolIndex].transform.position);
     }
 
+    //method looks for nearest patrol point
     int findNearestPoint()
     {
         patrolIndex = 0;
@@ -69,6 +72,7 @@ public class BlindEnemy : Enemy
     // Update is called once per frame
     void Update()
     {
+        //switch behaviour based on state
         switch (currentState)
         {
             case (States.patrol): Patrol(); break;
@@ -76,8 +80,12 @@ public class BlindEnemy : Enemy
             case (States.chase): Chase(); break;
             case (States.attack): Attack(); break;
         }
+
+        //adjust color based on state
         AdjustColor();
     }
+
+    //Patrol method
     public void Patrol()
     {
         if (Vector3.Distance(transform.position, patrolPoints[patrolIndex].transform.position) < 1.1f)
@@ -87,6 +95,8 @@ public class BlindEnemy : Enemy
         }
 
     }
+
+    //search method
     public void Search()
     {
         if (Vector3.Distance(transform.position, lastHeardSpot) < 1.1f)
@@ -95,6 +105,7 @@ public class BlindEnemy : Enemy
         }
     }
     
+    //Chase method
     public void Chase()
     {
         
@@ -109,6 +120,7 @@ public class BlindEnemy : Enemy
 
     }
 
+    //Attack method
     public override void Attack()
     {
         if (Vector3.Distance(transform.position, player.transform.position) < 3.0f)
@@ -157,6 +169,7 @@ public class BlindEnemy : Enemy
 
     }
 
+    //adjust the color of the object
     void AdjustColor()
     {
         switch (currentState)
@@ -185,16 +198,24 @@ public class BlindEnemy : Enemy
         }
     }
 
+    
     private void OnTriggerEnter(Collider other)
     {
-        
+        //check the collided gameobjects tag
         switch (other.tag)
         {
+            //if it is a sound
+            // - change state to search
+            // - set the last heard spot to that position and set it as a destination
             case "Sound":
                 currentState = States.search;
                 lastHeardSpot = other.transform.position;
                 agent.SetDestination(lastHeardSpot);
                 break;
+
+            //if it is the player
+            // - change state to Attack
+            // - set the playersposition as the destination 
             case "Player":
                 currentState = States.attack;
                 agent.SetDestination(player.transform.position);
