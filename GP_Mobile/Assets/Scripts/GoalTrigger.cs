@@ -9,6 +9,7 @@ public class GoalTrigger : MonoBehaviour
     public bool ToMainMenu;
     public bool ToNextLevel;
 
+
     private void OnTriggerEnter(Collider other)
     {
         //if the player hits the trigger
@@ -18,11 +19,13 @@ public class GoalTrigger : MonoBehaviour
             if (ToMainMenu)
             {
                 GameManager.control.ToMainMenu();
+                SceneManageMent.direction.LoadMainScene();
             }
             //if it is set for the next level, load the next scene.
             if (ToNextLevel)
             {
-                GameManager.control.GoToNextLevel();
+                //GameManager.control.GoToNextLevel();
+                SceneManageMent.direction.LoadNextLevel();
             }
         }
     }

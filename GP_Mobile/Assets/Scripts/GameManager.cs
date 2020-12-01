@@ -8,7 +8,7 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager control;
+    public static GameManager control = null;
     public int highestLevel;
     public int scraps;
     public int meds;
@@ -29,16 +29,6 @@ public class GameManager : MonoBehaviour
     public GameObject gamePlayScreen;
     public GameObject pauseScreen;
 
-    enum Screens
-    {
-        Title,
-        MainMenu,
-        GamePlay,
-        Pause
-    }
-
-    Screens screen;
-
     [HideInInspector]
     public int TitleScreen = 0;
     [HideInInspector]
@@ -49,6 +39,17 @@ public class GameManager : MonoBehaviour
     public int Techdemo = 5;
     [HideInInspector]
     public int MainStart = 6;
+
+    enum Screens
+    {
+        Title,
+        MainMenu,
+        GamePlay,
+        Pause
+    }
+
+    Screens screen;
+
 
     void Awake()
     {
