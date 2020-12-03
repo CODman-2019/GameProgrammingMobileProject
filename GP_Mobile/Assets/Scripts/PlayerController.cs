@@ -23,7 +23,7 @@ public class PlayerController : MonoBehaviour
     //int beatCount;
     public int maxBeatCount;
     bool reduceBeat;
-
+    float space;
 
     private void Start()
     {
@@ -41,15 +41,21 @@ public class PlayerController : MonoBehaviour
 
         //Debug.Log(message: agent.pathStatus);
         // if the left mouse button is pressed
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButton(0))
         {
             Ray ray = view.ScreenPointToRay(Input.mousePosition);
-            //RaycastHit hit;
+            
 
             if (Physics.Raycast(ray, out RaycastHit hit))
             {
-                //if(Vector3.Distance(hit.point, transform.position) < distance )// move the player+ 2.5f
-                agent.SetDestination(hit.point);
+                space = Vector3.Distance(hit.point, transform.position);
+
+                if(Physics.Raycast(hit.point,transform.position)  && (Vector3.Distance(hit.point, transform.position) <= distance ))
+                {
+                    agent.SetDestination(hit.point);
+                }
+
+                
             }
         }
 
@@ -63,7 +69,8 @@ public class PlayerController : MonoBehaviour
 
         if(Health < 0)
         {
-            GameManager.control.ToMainMenu();
+            //GameManager.control.ToMainMenu();
+            SceneManageMent.direction.LoadMainScene();
         }
     }
 

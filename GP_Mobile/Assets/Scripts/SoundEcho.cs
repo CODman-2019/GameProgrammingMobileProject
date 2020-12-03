@@ -3,16 +3,35 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class SoundEcho : MonoBehaviour
+public class SoundEcho : MonoBehaviour
 {
     //public GameObject subject;
+    public bool scaleInOut;
+    public float maxSize;
+    public float scaleValue;
+    public float soundHeight;
+    private Vector3 scale;
 
-    public float maxEchoSize; 
+    private void Start()
+    {
+        this.gameObject.transform.localScale = new Vector3(0f, 0f, 0f);
+        scale = this.gameObject.transform.localScale;
+        scale.y = soundHeight;
+    }
+    
+    public void Activate()
+    {
+        if (scaleInOut)
+        {
+            
+        }
+    }
 
-    public abstract IEnumerator Echo();
-
-    public abstract void CheckEcho();
-
-    public abstract void ScaleEcho();
+    private void echo()
+    {
+        scale.x += scaleValue;
+        scale.z += scaleValue;
+        this.gameObject.transform.localScale = scale;
+    }
 
 }

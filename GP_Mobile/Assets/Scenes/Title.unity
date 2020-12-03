@@ -400,7 +400,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &291181617
 Transform:
   m_ObjectHideFlags: 0
@@ -653,15 +653,6 @@ MonoBehaviour:
   currentExp: 0
   nextRank: 0
   playerdeath: 0
-  titleScreen: {fileID: 456288766}
-  mainMenuScreen: {fileID: 1483047567}
-  gamePlayScreen: {fileID: 823981214}
-  pauseScreen: {fileID: 291181616}
-  TitleScreen: 0
-  MainScreen: 1
-  Tutorial: 2
-  Techdemo: 5
-  MainStart: 6
 --- !u!4 &810821367
 Transform:
   m_ObjectHideFlags: 0
@@ -1488,7 +1479,7 @@ GameObject:
   - component: {fileID: 2020584888}
   - component: {fileID: 2020584887}
   m_Layer: 0
-  m_Name: Button
+  m_Name: MainPlayButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1965,6 +1956,14 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4479527117558120286, guid: 77063fa5a40893041b854a8e14803fbc, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4595923635320079828, guid: 77063fa5a40893041b854a8e14803fbc, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6446324848115923952, guid: 77063fa5a40893041b854a8e14803fbc, type: 3}
       propertyPath: m_Text
       value: 'Return
@@ -2114,6 +2113,14 @@ PrefabInstance:
     - target: {fileID: 7431773786444169697, guid: 77063fa5a40893041b854a8e14803fbc, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: -266
+      objectReference: {fileID: 0}
+    - target: {fileID: 7854225408464589197, guid: 77063fa5a40893041b854a8e14803fbc, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8047457235514376379, guid: 77063fa5a40893041b854a8e14803fbc, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 77063fa5a40893041b854a8e14803fbc, type: 3}
