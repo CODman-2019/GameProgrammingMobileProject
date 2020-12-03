@@ -270,7 +270,7 @@ MonoBehaviour:
   Health: 100
   view: {fileID: 0}
   agent: {fileID: 422114725833113831}
-  distance: 10
+  distance: 5
   heart: {fileID: 2397629686832038608}
   startPos: {x: 0, y: 0, z: 0}
   heartRate: 1

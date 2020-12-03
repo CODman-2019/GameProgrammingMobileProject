@@ -50,7 +50,9 @@ public class PlayerController : MonoBehaviour
             {
                 space = Vector3.Distance(hit.point, transform.position);
 
-                if(Physics.Raycast(hit.point,transform.position)  && (Vector3.Distance(hit.point, transform.position) <= distance ))
+                
+
+                if(/*Physics.Raycast(hit.point, transform.position) && */(Vector3.Distance(hit.point, transform.position) <= distance ))
                 {
                     agent.SetDestination(hit.point);
                 }
