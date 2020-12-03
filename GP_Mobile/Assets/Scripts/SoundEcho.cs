@@ -32,6 +32,16 @@ public class SoundEcho : MonoBehaviour
         scale.x += scaleValue;
         scale.z += scaleValue;
         this.gameObject.transform.localScale = scale;
+
+        CheckEchoSize();
     }
 
+    private void CheckEchoSize()
+    {
+        //for raidius
+        if(scale.x > maxSize / 2)
+        {
+
+        }
+    }
 }
