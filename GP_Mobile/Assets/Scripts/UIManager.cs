@@ -10,6 +10,7 @@ public class UIManager : MonoBehaviour
     public GameObject mainMenuScreen;
     public GameObject gamePlayScreen;
     public GameObject pauseScreen;
+
     enum Screens
     {
         Title,
@@ -20,9 +21,10 @@ public class UIManager : MonoBehaviour
 
     Screens current;
 
-
     GameObject previousScreen;
     GameObject currentScreen;
+
+    //used if outside game manager
     private void Awake()
     {
         if(screen == null)
@@ -77,7 +79,6 @@ public class UIManager : MonoBehaviour
     {
         previousScreen = currentScreen;
     }
-
 
     public void ToTitle()
     {

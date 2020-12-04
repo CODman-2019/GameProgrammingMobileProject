@@ -385,8 +385,9 @@ GameObject:
   - component: {fileID: 7949922289414425515}
   - component: {fileID: 1995240181065859868}
   - component: {fileID: 7657867844497990731}
+  - component: {fileID: 1555827093}
   m_Layer: 0
-  m_Name: Cylinder
+  m_Name: Echo
   m_TagString: Sound
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -469,3 +470,18 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: -0.0000037550944, y: 0, z: -0.000000089407095}
+--- !u!114 &1555827093
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2397629686832038608}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4cb0bd858d040a1418217bb7744ba0a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scaleInOut: 1
+  maxSize: 7
+  scaleValue: 0.02

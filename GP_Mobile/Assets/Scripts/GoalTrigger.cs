@@ -18,14 +18,14 @@ public class GoalTrigger : MonoBehaviour
             //if it is set for the main menu have the game manager load the menu screen
             if (ToMainMenu)
             {
-               // GameManager.control.ToMainMenu();
-                SceneManageMent.direction.LoadMainScene();
+                GameManager.control.GoToMainMenu();
+                //SceneManageMent.direction.LoadMainScene();
             }
             //if it is set for the next level, load the next scene.
             if (ToNextLevel)
             {
-                //GameManager.control.GoToNextLevel();
-                SceneManageMent.direction.LoadNextLevel();
+                GameManager.control.GoToNextLevel();
+                //SceneManageMent.direction.LoadNextLevel();
             }
         }
     }

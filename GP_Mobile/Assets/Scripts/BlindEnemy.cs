@@ -4,7 +4,6 @@ using UnityEngine.AI;
 
 public class BlindEnemy : Enemy
 {
-
     //variables
     public Color patrolSense;
     public Color searchSense;
@@ -16,7 +15,6 @@ public class BlindEnemy : Enemy
     NavMeshAgent agent;
 
     public bool findPatrolPoints;
-
     bool reverse;
 
     enum States
@@ -29,7 +27,6 @@ public class BlindEnemy : Enemy
     States currentState;
 
     Vector3 lastHeardSpot;
-    bool scan;
     public float searchDuration;
     public float rangeDistance;
     GameObject player;
@@ -44,14 +41,13 @@ public class BlindEnemy : Enemy
         if(findPatrolPoints) patrolPoints = GameObject.FindGameObjectsWithTag("PatrolPoints");
         currentState = States.patrol;
         agent = GetComponent<NavMeshAgent>();
-        scan = false;
 
-        patrolIndex = findNearestPoint();
+        patrolIndex = FindNearestPoint();
         agent.SetDestination(patrolPoints[patrolIndex].transform.position);
     }
 
     //method looks for nearest patrol point
-    int findNearestPoint()
+    int FindNearestPoint()
     {
         patrolIndex = 0;
         float pointDistance = Vector3.Distance(transform.position, patrolPoints[patrolIndex].transform.position);
@@ -187,7 +183,6 @@ public class BlindEnemy : Enemy
         }
     }
 
-
     IEnumerator Hear()
     {
         yield return new WaitForSeconds(searchDuration);
@@ -198,7 +193,6 @@ public class BlindEnemy : Enemy
         }
     }
 
-    
     private void OnTriggerEnter(Collider other)
     {
         //check the collided gameobjects tag

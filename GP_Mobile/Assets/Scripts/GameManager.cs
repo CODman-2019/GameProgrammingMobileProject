@@ -2,29 +2,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager control = null;
-    public int highestLevel;
-    public int scraps;
-    public int meds;
-
-    private int currentLevel;
-    [HideInInspector]
-    public int rank;
-    [HideInInspector]
-    public int currentExp;
-    [HideInInspector]
-    public int nextRank;
-
-    [HideInInspector]
-    public bool playerdeath;
-
-
+    UIManager pager;
+    SceneManageMent director;
 
     void Awake()
     {
@@ -41,91 +26,32 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        playerdeath = false;
-        nextRank = 10;
+        //playerdeath = false;
+        director = GameObject.Find("Scene Manager").GetComponent<SceneManageMent>();
+        pager = GameObject.Find("UI Manager").GetComponent<UIManager>();
+        pager.ToTitle();
     }
 
-
-
-    //variables to adjust experience and currency
-    public void AddScraps(int collected)
+    public void GoToNextLevel()
     {
-        scraps += collected;
+        PlayerController player = GameObject.Find("Player").GetComponent<PlayerController>();
+
+        //save player data from level and load to next level
+        player.Save();
+        director.LoadNextLevel();
+        pager.ToGameplay();
     }
-    public void AddMed(int collected)
+
+    public void GoToMainMenu()
     {
-        meds += collected;
-    }
-    public void AddExp(int expAquired)
-    {
-        currentExp += expAquired;
-        CheckExp();
-    }
+        PlayerController player = GameObject.Find("Player").GetComponent<PlayerController>();
 
-    //checks if player ranks up
-    private void CheckExp()
-    {
-        if(currentExp > nextRank)
-        {
-            rank++;
-            nextRank += 5;
-        }
+        player.Save();
+        director.LoadMainScene();
+        pager.ToMainMenu();
     }
 
-
-    // Save/Load methods
-    void Save()
-    {
-        BinaryFormatter bf = new BinaryFormatter();
-        FileStream file = File.Create(Application.persistentDataPath + "/gameSave.dat");
-
-        Data data = new Data
-        {
-            //data being stored
-            currentLevel = highestLevel,
-            currentScraps = scraps,
-            currentMeds = meds,
-            currentRank = rank,
-            currentExp = currentExp,
-            currentNextRank = nextRank
-        };
-
-        bf.Serialize(file, data);
-        file.Close();
-    }
-
-    void Load()
-    {
-        if(File.Exists(Application.persistentDataPath + "/gameSave.dat"))
-        {
-            BinaryFormatter bf = new BinaryFormatter();
-            FileStream file = File.Open(Application.persistentDataPath + "/gameSave.dat", FileMode.Open);
-
-            Data data = (Data)bf.Deserialize(file);
-            file.Close();
-
-            highestLevel = data.currentLevel;
-            scraps = data.currentScraps;
-            meds = data.currentMeds;
-            rank = data.currentRank;
-            currentExp = data.currentExp;
-            nextRank = data.currentNextRank;
-        }
-
-    }
-
+    //public void PlayerDeath() {}
 
 }
 
-//Data
-[Serializable]
-class Data
-{
-    public int currentRank;
-    public int currentExp;
-    public int currentNextRank;
-
-    public int currentLevel;
-    public int currentScraps;
-    public int currentMeds;
-}

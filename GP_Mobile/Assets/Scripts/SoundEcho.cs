@@ -9,39 +9,41 @@ public class SoundEcho : MonoBehaviour
     public bool scaleInOut;
     public float maxSize;
     public float scaleValue;
-    public float soundHeight;
+    float scaleModifier;
+    //public float soundHeight;
     private Vector3 scale;
 
     private void Start()
     {
         this.gameObject.transform.localScale = new Vector3(0f, 0f, 0f);
         scale = this.gameObject.transform.localScale;
-        scale.y = soundHeight;
-    }
-    
-    public void Activate()
-    {
-        if (scaleInOut)
-        {
-            
-        }
+        scaleModifier = 1;
+        scale.y = 0.1f;
     }
 
-    private void echo()
+
+    public void EchoChange()
     {
-        scale.x += scaleValue;
-        scale.z += scaleValue;
+        if(Time.timeScale == 1f)
+        {
+        scale.x += scaleValue * scaleModifier;
+        scale.z += scaleValue * scaleModifier;
         this.gameObject.transform.localScale = scale;
 
         CheckEchoSize();
-    }
-
-    private void CheckEchoSize()
-    {
-        //for raidius
-        if(scale.x > maxSize / 2)
-        {
 
         }
     }
+
+
+    private void CheckEchoSize()
+    {
+        //checking raidius size
+        if(scale.x >= maxSize || scale.z >= maxSize || scale.x < 0 || scale.z < 0)
+        {
+            if (!scaleInOut) Destroy(this.gameObject);
+            else scaleModifier *= -1;
+        }
+    }
+
 }

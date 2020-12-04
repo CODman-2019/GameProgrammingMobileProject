@@ -1,6 +1,9 @@
-﻿
+﻿using System;
 using System.Collections;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.Collections.Generic;
 using TMPro;
+using System.IO;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -13,27 +16,42 @@ public class PlayerController : MonoBehaviour
 
     public float distance;
     public GameObject heart;
+    SoundEcho heartBeat;
     public Vector3 startPos;
 
-    public float heartRate;
-    float heartBeatRange;
-    public float hMaxRange;
-    public float heartTimer;
-    public float beatIncrement;
-    //int beatCount;
-    public int maxBeatCount;
-    bool reduceBeat;
+    private int currentLevel;
+
+    [HideInInspector]
+    public int rank;
+    [HideInInspector]
+    public int currentExp;
+    [HideInInspector]
+    public int nextRank;
+    public int highestLevel;
+    public int scraps;
+    public int meds;
+
+    //public float heartRate;
+    //float heartBeatRange;
+    //public float hMaxRange;
+    //public float heartTimer;
+    //public float beatIncrement;
+    //public int maxBeatCount;
+    //bool reduceBeat;
     float space;
 
     private void Start()
     {
-        reduceBeat = false;
+        Load();
+        heartBeat = heart.GetComponent<SoundEcho>();
+
+        //reduceBeat = false;
         // beatCount = 0;
 
         startPos = gameObject.transform.position;
 
     }
-
+    
     // Update is called once per frame
     void Update()
     {
@@ -50,18 +68,16 @@ public class PlayerController : MonoBehaviour
             {
                 space = Vector3.Distance(hit.point, transform.position);
 
-                
-
-                if(/*Physics.Raycast(hit.point, transform.position) && */(Vector3.Distance(hit.point, transform.position) <= distance ))
+                if((Vector3.Distance(hit.point, transform.position) <= distance ))
                 {
                     agent.SetDestination(hit.point);
                 }
 
-                
             }
         }
 
-        BeatHeart();
+        heartBeat.EchoChange();
+        //BeatHeart();
 
     }
 
@@ -71,63 +87,101 @@ public class PlayerController : MonoBehaviour
 
         if(Health < 0)
         {
-            //GameManager.control.ToMainMenu();
-            SceneManageMent.direction.LoadMainScene();
+            GameManager.control.GoToMainMenu();
+            //SceneManageMent.direction.LoadMainScene();
         }
     }
 
-    public void HealHealth(float heal)
+    //variables to adjust experience and currency
+    public void AddScraps(int collected)
     {
-        Health += heal;
+        scraps += collected;
     }
+    public void AddMed(int collected)
+    {
+        meds += collected;
+    }
+    public void AddExp(int expAquired)
+    {
+        currentExp += expAquired;
+        CheckExp();
+    }
+
+    //checks if player ranks up
+    private void CheckExp()
+    {
+        if (currentExp > nextRank)
+        {
+            rank++;
+            nextRank += 5;
+        }
+    }
+
+    // Save/Load methods
+    public void Save()
+    {
+        BinaryFormatter bf = new BinaryFormatter();
+        FileStream file = File.Create(Application.persistentDataPath + "/PlayerData.dat");
+
+        Data data = new Data
+        {
+            //data being stored
+            currentLevel = highestLevel,
+            currentScraps = scraps,
+            currentMeds = meds,
+            currentRank = rank,
+            currentExp = currentExp,
+            currentNextRank = nextRank
+        };
+
+        bf.Serialize(file, data);
+        file.Close();
+    }
+
+    public void Load()
+    {
+        if(File.Exists(Application.persistentDataPath + "/PlayerData.dat"))
+        {
+            BinaryFormatter bf = new BinaryFormatter();
+            FileStream file = File.Open(Application.persistentDataPath + "/PlayerData.dat", FileMode.Open);
+
+            Data data = (Data)bf.Deserialize(file);
+            file.Close();
+
+            highestLevel = data.currentLevel;
+            scraps = data.currentScraps;
+            meds = data.currentMeds;
+            rank = data.currentRank;
+            currentExp = data.currentExp;
+            nextRank = data.currentNextRank;
+        }
+
+    }
+
+
+    //public void HealHealth(float heal)
+    //{
+    //    Health += heal;
+    //}
 
     // hearecho code - BeatHeart, CheckBeat, ScaleBeatRange
 
     //Beat
-    void BeatHeart()
-    {
-        if (!reduceBeat)
-        {
-            heartBeatRange += beatIncrement;
-            // Debug.Log("BEEP");
-        }
-        else
-        {
 
-            heartBeatRange -= beatIncrement;
-            // Debug.Log("BOOP");
-        }
-        CheckBeat();
-    }
 
-    void CheckBeat()
-    {
-        if (heartBeatRange > hMaxRange)
-        {
-            reduceBeat = true;
-        }
-        if (heartBeatRange < 0)
-        {
-            reduceBeat = false;
-            //beatCount++;
-        }
-
-        ScaleBeatRange();
-
-    }
-
-    void ScaleBeatRange()
-    {
-        Vector3 temp = transform.localScale;
-
-        temp.x = heartBeatRange;
-        temp.y = 0.01f;
-        temp.z = heartBeatRange;
-
-        heart.transform.localScale = temp;
-    }
 }
+//Data
+[Serializable]
+class Data
+{
+    public int currentRank;
+    public int currentExp;
+    public int currentNextRank;
 
+    public int currentLevel;
+    public int currentScraps;
+    public int currentMeds;
+}
 
 /// --- unused code
 ///    IEnumerator HeartBeat()
@@ -135,6 +189,48 @@ public class PlayerController : MonoBehaviour
 //    yield return new WaitForSeconds(heartRate);
 //    BeatHeart();
 //    //StartCoroutine(HeartBeat());
+//}
+//void BeatHeart()
+//{
+//    if (!reduceBeat)
+//    {
+//        heartBeatRange += beatIncrement;
+//        // Debug.Log("BEEP");
+//    }
+//    else
+//    {
+
+//        heartBeatRange -= beatIncrement;
+//        // Debug.Log("BOOP");
+//    }
+//    CheckBeat();
+//}
+
+//void CheckBeat()
+//{
+//    if (heartBeatRange > hMaxRange)
+//    {
+//        reduceBeat = true;
+//    }
+//    if (heartBeatRange < 0)
+//    {
+//        reduceBeat = false;
+//        //beatCount++;
+//    }
+
+//    ScaleBeatRange();
+
+//}
+
+//void ScaleBeatRange()
+//{
+//    Vector3 temp = transform.localScale;
+
+//    temp.x = heartBeatRange;
+//    temp.y = 0.01f;
+//    temp.z = heartBeatRange;
+
+//    heart.transform.localScale = temp;
 //}
 /// 
     ///

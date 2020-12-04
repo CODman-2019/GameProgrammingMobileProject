@@ -40,6 +40,7 @@ public class SceneManageMent : MonoBehaviour
         Application.Quit();
     }
 
+    //remove this
     public void LoadTitleScene()
     {
         SceneManager.LoadScene("Title");
