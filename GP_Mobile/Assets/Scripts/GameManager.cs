@@ -34,7 +34,8 @@ public class GameManager : MonoBehaviour
 
     public void GoToNextLevel()
     {
-        PlayerController player = GameObject.Find("Player").GetComponent<PlayerController>();
+        //PlayerController player = GameObject.Find("Player").GetComponent<PlayerController>();
+        Player player = GameObject.Find("Player").GetComponent<Player>();
 
         //save player data from level and load to next level
         player.Save();
@@ -44,7 +45,8 @@ public class GameManager : MonoBehaviour
 
     public void GoToMainMenu()
     {
-        PlayerController player = GameObject.Find("Player").GetComponent<PlayerController>();
+        //PlayerController player = GameObject.Find("Player").GetComponent<PlayerController>();
+        Player player = GameObject.Find("Player").GetComponent<Player>();
 
         player.Save();
         director.LoadMainScene();

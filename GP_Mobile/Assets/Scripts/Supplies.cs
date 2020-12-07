@@ -8,8 +8,8 @@ public class Supplies : MonoBehaviour
     bool isMeds;
     bool isScraps;
 
-    int value;
-    int expBonus;
+    public int value;
+    public int expBonus;
 
     private void Update()
     {
@@ -20,7 +20,7 @@ public class Supplies : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            PlayerController playerinventory = other.GetComponent<PlayerController>();
+            Player playerinventory = other.GetComponent<Player>();
             
             if (isMeds)
             {

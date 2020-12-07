@@ -9,7 +9,6 @@ using UnityEngine.AI;
 
 public class PlayerController : MonoBehaviour
 {
-    public float Health;
 
     public Camera view;
     public NavMeshAgent agent;
@@ -19,30 +18,12 @@ public class PlayerController : MonoBehaviour
     SoundEcho heartBeat;
     public Vector3 startPos;
 
-    private int currentLevel;
-
-    [HideInInspector]
-    public int rank;
-    [HideInInspector]
-    public int currentExp;
-    [HideInInspector]
-    public int nextRank;
-    public int highestLevel;
-    public int scraps;
-    public int meds;
-
-    //public float heartRate;
-    //float heartBeatRange;
-    //public float hMaxRange;
-    //public float heartTimer;
-    //public float beatIncrement;
-    //public int maxBeatCount;
-    //bool reduceBeat;
+    public Animator playerAnimator;
     float space;
 
     private void Start()
     {
-        Load();
+        //Load();
         heartBeat = heart.GetComponent<SoundEcho>();
 
         //reduceBeat = false;
@@ -55,8 +36,6 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       
-
         //Debug.Log(message: agent.pathStatus);
         // if the left mouse button is pressed
         if (Input.GetMouseButton(0))
@@ -71,9 +50,15 @@ public class PlayerController : MonoBehaviour
                 if((Vector3.Distance(hit.point, transform.position) <= distance ))
                 {
                     agent.SetDestination(hit.point);
+                    playerAnimator.SetBool("moving", true);
                 }
 
             }
+        }
+        
+        if(agent.pathStatus == NavMeshPathStatus.PathComplete)
+        {
+            playerAnimator.SetBool("moving", false);
         }
 
         heartBeat.EchoChange();
@@ -81,82 +66,80 @@ public class PlayerController : MonoBehaviour
 
     }
 
-    public void TakeDamage(float damage)
-    {
-        Health -= damage;
 
-        if(Health < 0)
-        {
-            GameManager.control.GoToMainMenu();
-            //SceneManageMent.direction.LoadMainScene();
-        }
-    }
 
-    //variables to adjust experience and currency
-    public void AddScraps(int collected)
-    {
-        scraps += collected;
-    }
-    public void AddMed(int collected)
-    {
-        meds += collected;
-    }
-    public void AddExp(int expAquired)
-    {
-        currentExp += expAquired;
-        CheckExp();
-    }
 
-    //checks if player ranks up
-    private void CheckExp()
-    {
-        if (currentExp > nextRank)
-        {
-            rank++;
-            nextRank += 5;
-        }
-    }
+}
 
-    // Save/Load methods
-    public void Save()
-    {
-        BinaryFormatter bf = new BinaryFormatter();
-        FileStream file = File.Create(Application.persistentDataPath + "/PlayerData.dat");
+    //public float heartRate;
+    //float heartBeatRange;
+    //public float hMaxRange;
+    //public float heartTimer;
+    //public float beatIncrement;
+    //public int maxBeatCount;
+    //bool reduceBeat;
+    //[HideInInspector]
+    //public int rank;
+    //[HideInInspector]
+    //public int currentExp;
+    //[HideInInspector]
+    //public int nextRank;
+    //public int highestLevel;
+    //public int scraps;
+    //public int meds;
+//Data
+//[Serializable]
+//class Data
+//{
+//    public int currentRank;
+//    public int currentExp;
+//    public int currentNextRank;
 
-        Data data = new Data
-        {
-            //data being stored
-            currentLevel = highestLevel,
-            currentScraps = scraps,
-            currentMeds = meds,
-            currentRank = rank,
-            currentExp = currentExp,
-            currentNextRank = nextRank
-        };
+//    public int currentLevel;
+//    public int currentScraps;
+//    public int currentMeds;
+//}
+/// --- unused code
+///    IEnumerator HeartBeat() // Save/Load methods
+//public void Save()
+    //{
+    //    BinaryFormatter bf = new BinaryFormatter();
+    //    FileStream file = File.Create(Application.persistentDataPath + "/PlayerData.dat");
 
-        bf.Serialize(file, data);
-        file.Close();
-    }
+    //    Data data = new Data
+    //    {
+    //        //data being stored
+    //        currentLevel = highestLevel,
+    //        currentScraps = scraps,
+    //        currentMeds = meds,
+    //        currentRank = rank,
+    //        currentExp = currentExp,
+    //        currentNextRank = nextRank
+    //    };
 
-    public void Load()
-    {
-        if(File.Exists(Application.persistentDataPath + "/PlayerData.dat"))
-        {
-            BinaryFormatter bf = new BinaryFormatter();
-            FileStream file = File.Open(Application.persistentDataPath + "/PlayerData.dat", FileMode.Open);
+    //    bf.Serialize(file, data);
+    //    file.Close();
+    //}
 
-            Data data = (Data)bf.Deserialize(file);
-            file.Close();
+    //public void Load()
+    //{
+    //    if(File.Exists(Application.persistentDataPath + "/PlayerData.dat"))
+    //    {
+    //        BinaryFormatter bf = new BinaryFormatter();
+    //        FileStream file = File.Open(Application.persistentDataPath + "/PlayerData.dat", FileMode.Open);
 
-            highestLevel = data.currentLevel;
-            scraps = data.currentScraps;
-            meds = data.currentMeds;
-            rank = data.currentRank;
-            currentExp = data.currentExp;
-            nextRank = data.currentNextRank;
-        }
+    //        Data data = (Data)bf.Deserialize(file);
+    //        file.Close();
 
-    }
+    //        highestLevel = data.currentLevel;
+    //        scraps = data.currentScraps;
+    //        meds = data.currentMeds;
+    //        rank = data.currentRank;
+    //        currentExp = data.currentExp;
+    //        nextRank = data.currentNextRank;
+    //    }
+
+    //}
 
 
     //public void HealHealth(float heal)
@@ -168,23 +151,6 @@ public class PlayerController : MonoBehaviour
 
     //Beat
 
-
-}
-//Data
-[Serializable]
-class Data
-{
-    public int currentRank;
-    public int currentExp;
-    public int currentNextRank;
-
-    public int currentLevel;
-    public int currentScraps;
-    public int currentMeds;
-}
-
-/// --- unused code
-///    IEnumerator HeartBeat()
 //{
 //    yield return new WaitForSeconds(heartRate);
 //    BeatHeart();
@@ -232,5 +198,3 @@ class Data
 
 //    heart.transform.localScale = temp;
 //}
-/// 
-    ///

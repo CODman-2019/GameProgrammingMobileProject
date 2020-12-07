@@ -29,13 +29,13 @@ public class BlindEnemy : Enemy
     Vector3 lastHeardSpot;
     public float searchDuration;
     public float rangeDistance;
-    GameObject player;
+    Player player;
 
 
     // Start is called before the first frame update
     void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player");
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         detectionColor = GetComponent<Renderer>().material;
 
         if(findPatrolPoints) patrolPoints = GameObject.FindGameObjectsWithTag("PatrolPoints");
@@ -122,7 +122,7 @@ public class BlindEnemy : Enemy
         if (Vector3.Distance(transform.position, player.transform.position) < 3.0f)
         {
             currentState = States.attack;
-            player.GetComponent<PlayerController>().TakeDamage(strength / 2);
+            player.TakeDamage(strength / 2);
         }
 
         if (Vector3.Distance(transform.position, player.transform.position) > rangeDistance)

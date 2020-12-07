@@ -125,6 +125,8 @@ GameObject:
   - component: {fileID: 422114725833113825}
   - component: {fileID: 422114725833113831}
   - component: {fileID: 422114725833113828}
+  - component: {fileID: 247811680}
+  - component: {fileID: 505261403452750057}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -267,17 +269,47 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 659e9525f1cbcb944878fda985ce728e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Health: 100
   view: {fileID: 0}
   agent: {fileID: 422114725833113831}
   distance: 5
   heart: {fileID: 2397629686832038608}
   startPos: {x: 0, y: 0, z: 0}
-  heartRate: 1
-  hMaxRange: 7
-  heartTimer: 4
-  beatIncrement: 0.02
-  maxBeatCount: 0
+  playerAnimator: {fileID: 247811680}
+--- !u!95 &247811680
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 422114725833113822}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 6b4d76a8d520fbb48a948881cceb7db1, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &505261403452750057
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 422114725833113822}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 744f9df597302e147976e3c69c3385b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Health: 100
+  rank: 0
+  currentExp: 0
+  nextRank: 0
 --- !u!1 &422114726428848380
 GameObject:
   m_ObjectHideFlags: 0
