@@ -5,15 +5,15 @@ using UnityEngine;
 public class Supplies : MonoBehaviour
 {
     public float speed;
-    bool isMeds;
-    bool isScraps;
+    public bool isMeds;
+    public bool isScraps;
 
     public int value;
     public int expBonus;
 
     private void Update()
     {
-        transform.Rotate(speed * 2 * Time.deltaTime, speed * 2 * Time.deltaTime, speed * 2 * Time.deltaTime);
+        transform.Rotate(/*speed * 2 * Time.deltaTime*/ 0, speed * 2 * Time.deltaTime, /*speed * 2 * Time.deltaTime*/0);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -33,6 +33,8 @@ public class Supplies : MonoBehaviour
                 playerinventory.AddExp(expBonus);
 
             }
+
+            gameObject.SetActive(false);
         }
     }
 

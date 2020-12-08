@@ -50,23 +50,23 @@ public class PlayerController : MonoBehaviour
                 if((Vector3.Distance(hit.point, transform.position) <= distance ))
                 {
                     agent.SetDestination(hit.point);
-                    playerAnimator.SetBool("moving", true);
+                    //playerAnimator.SetBool("moving", true);
                 }
 
             }
         }
         
-        if(agent.pathStatus == NavMeshPathStatus.PathComplete)
-        {
-            playerAnimator.SetBool("moving", false);
-        }
+        //if(agent.pathStatus == NavMeshPathStatus.PathComplete)
+        //{
+        //    playerAnimator.SetBool("moving", false);
+        //}
 
         heartBeat.EchoChange();
         //BeatHeart();
 
     }
 
-
+ 
 
 
 }

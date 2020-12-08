@@ -4,11 +4,13 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class Player : GlobalSettings
+public class Player : MonoBehaviour
 {
-    public float Health;
-    
+    public float health;
+    float maxHealth;
+
     [HideInInspector]
     public int rank;
     [HideInInspector]
@@ -16,24 +18,52 @@ public class Player : GlobalSettings
     [HideInInspector]
     public int nextRank;
     [HideInInspector]
-    int scraps;
+    public int scraps;
     [HideInInspector]
-    int meds;
+    public int meds;
+    [HideInInspector]
+    public Passages passageWay = null;
+
+    // UI elements used to update information for user
+    Counter counters;
+    //Text levelText;
+    //Text ExpText;
 
     // Start is called before the first frame update
     void Start()
     {
         Load();
+
+        counters = GameObject.Find("Counters").GetComponent<Counter>();
+
+        CheckExp();
+        counters.UpdateHealthBar(health);
+        counters.UpdateMedCounter(meds);
+        counters.UpdateScrapCounter(scraps);
+        counters.UpdateRankText(rank);
+        counters.UpdateEXPText(this);
+
+        //levelText = GameObject.Find("PlayerLevel").GetComponent<Text>();
+        //ExpText = GameObject.Find("EXPText").GetComponent<Text>();
+        //levelText.text = "Lv: "+ rank.ToString();
+        //ExpText.text = currentExp.ToString() + " / " + nextRank.ToString() + " EXP";
     }
+
+    //public void ResetPlayerHealth()
+    //{
+    //    health = GlobalSettings.gameData.health;
+    //}
+
+
 
     public void TakeDamage(float damage)
     {
-        Health -= damage;
+        health -= damage;
+        counters.UpdateHealthBar(health);
 
-        if(Health < 0)
+        if(health < 0)
         {
             GameManager.control.GoToMainMenu();
-            //SceneManageMent.direction.LoadMainScene();
         }
     }
 
@@ -42,26 +72,80 @@ public class Player : GlobalSettings
     public void AddScraps(int collected)
     {
         scraps += collected;
+        counters.UpdateScrapCounter(scraps);
     }
     public void AddMed(int collected)
     {
         meds += collected;
+        counters.UpdateMedCounter(meds);
     }
     public void AddExp(int expAquired)
     {
         currentExp += expAquired;
         CheckExp();
     }
+    public void HealPlayer()
+    {
+        if(meds >= 10)
+        {
+            health += 20;
+            UseMeds(10);
+            counters.UpdateHealthBar(health);
+        }
+    }
+
+    public void UseMeds(int medsUsed)
+    {
+        if(meds >= medsUsed)
+        {
+            meds -= 10;
+            counters.UpdateMedCounter(meds);
+        }
+    }
+
+    public bool UseScraps(int scrapsUsed)
+    {
+        if(scraps >= scrapsUsed)
+        {
+            scraps -= scrapsUsed;
+            counters.UpdateScrapCounter(scraps);
+            return true;
+        }
+        return false;
+    }
 
     //checks if player ranks up
     private void CheckExp()
     {
-        if (currentExp > nextRank)
+        if (currentExp >= nextRank)
         {
             rank++;
             nextRank += 5;
+            currentExp = 0;
+        }
+
+        counters.UpdateRankText(rank);
+        counters.EXPText.text = currentExp.ToString() + " / " + nextRank.ToString() + " EXP";
+        //counters.UpdateEXPText(this);
+        //levelText.text = "Lv: " + rank.ToString();
+        //ExpText.text = currentExp.ToString() + " / " + nextRank.ToString() + " EXP";
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Passage"))
+        {
+            passageWay = other.GetComponent<Passages>();
+            passageWay.ShowCost();
         }
     }
+    private void OnTriggerExit(Collider other)
+    {
+        if(passageWay != null) passageWay.infobox.text = "";
+            passageWay = null;
+        
+    }
+
 
     // Save/Load methods
     public void Save()
@@ -82,9 +166,8 @@ public class Player : GlobalSettings
         bf.Serialize(file, data);
         file.Close();
 
-        GlobalSettings.gameData.CreateBackUpPlayerData();
+        //GlobalSettings.gameData.CreateBackUpPlayerData();
     }
-
     public void Load()
     {
         if (File.Exists(Application.persistentDataPath + "/PlayerData.dat"))
@@ -95,13 +178,18 @@ public class Player : GlobalSettings
             PlayerData data = (PlayerData)bf.Deserialize(file);
             file.Close();
 
-            GlobalSettings.gameData.CheckPlayerData();
+           // GlobalSettings.gameData.CheckPlayerData();
             rank = data.currentRank;
             currentExp = data.currentExp;
             nextRank = data.currentNextRank;
             scraps = data.currentScraps;
             meds = data.currentMeds;
             
+        }
+        //otherwise SAVE current states
+        else
+        {
+            Save();
         }
 
 
@@ -110,3 +198,12 @@ public class Player : GlobalSettings
 
 }
 
+[Serializable]
+class PlayerData
+{
+    public int currentRank;
+    public int currentExp;
+    public int currentNextRank;
+    public int currentScraps;
+    public int currentMeds;
+}

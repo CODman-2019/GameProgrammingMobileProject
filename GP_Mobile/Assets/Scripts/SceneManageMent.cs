@@ -6,20 +6,20 @@ using UnityEngine;
 public class SceneManageMent : MonoBehaviour
 {
 
-    //[HideInInspector]
-    //public int TitleScreen = 0;
-    //[HideInInspector]
-    //public int MainScreen = 1;
     [HideInInspector]
-    public int Tutorial = 2;
+    int TitleScreen = 0;
     [HideInInspector]
-    public int Techdemo = 5;
+    int MainScreen = 1;
     [HideInInspector]
-    public int MainStart = 6;
+    int Tutorial = 2;
+    [HideInInspector]
+    int Techdemo = 5;
+    [HideInInspector]
+    int MainStart = 6;
 
     [HideInInspector]
     public int Level = 0;
-
+    Player player;
     public static SceneManageMent direction = null;
 
     private void Awake()
@@ -48,7 +48,7 @@ public class SceneManageMent : MonoBehaviour
 
     public void LoadMainScene()
     {
-        SceneManager.LoadScene("MainMenu");
+        SceneManager.LoadScene("Main Menu");
         Level = 0;
     }
 
@@ -64,7 +64,7 @@ public class SceneManageMent : MonoBehaviour
 
     public void LoadNextLevel()
     {
-        Level++;
-        SceneManager.LoadScene("Level " + Level);
+        Level += 1;
+        SceneManager.LoadScene("Level " + Level );
     }
 }

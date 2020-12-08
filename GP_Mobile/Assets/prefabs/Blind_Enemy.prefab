@@ -229,13 +229,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   range: 5
-  strength: 3
-  player: {fileID: 0}
+  strength: 0.1
+  loopPath: 0
   patrolSense: {r: 0.37241387, g: 1, b: 0, a: 0}
   searchSense: {r: 1, g: 0.97617406, b: 0, a: 0}
   attackSense: {r: 1, g: 0, b: 0, a: 0}
-  patrolPoints: []
-  findPatrolPoints: 1
+  patrolPoints:
+  - {fileID: 0}
+  - {fileID: 0}
+  findPatrolPoints: 0
   searchDuration: 10
   rangeDistance: 16
 --- !u!54 &707632396696934160

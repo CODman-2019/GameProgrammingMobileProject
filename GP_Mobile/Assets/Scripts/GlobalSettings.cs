@@ -10,7 +10,7 @@ public class GlobalSettings : MonoBehaviour
     public static GlobalSettings gameData = null;
     BinaryFormatter bf = new BinaryFormatter();
 
-    
+    float health = 100;
 
     public void Awake()
     {
@@ -23,6 +23,12 @@ public class GlobalSettings : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+
+    public void ResetPlayerHealth()
+    {
+        Player player = GameObject.Find("Player").GetComponent<Player>();
+        player.health = this.health;
     }
 
     public void CreateBackUpPlayerData()
@@ -134,19 +140,8 @@ public class GlobalSettings : MonoBehaviour
     }
 
 
-
-
 }
 //Data
-[Serializable]
-class PlayerData
-{
-    public int currentRank;
-    public int currentExp;
-    public int currentNextRank;
-    public int currentScraps;
-    public int currentMeds;
-}
 
 [Serializable]
 class BackUpPlayerData

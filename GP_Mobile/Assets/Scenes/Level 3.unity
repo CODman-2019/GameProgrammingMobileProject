@@ -16306,14 +16306,6 @@ PrefabInstance:
       value: Blind_Enemy
       objectReference: {fileID: 0}
     - target: {fileID: 707632396696934170, guid: 44b0c6659d90ca6478b1ca813c81045d, type: 3}
-      propertyPath: patrolPoints.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 707632396696934170, guid: 44b0c6659d90ca6478b1ca813c81045d, type: 3}
-      propertyPath: findPatrolPoints
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 707632396696934170, guid: 44b0c6659d90ca6478b1ca813c81045d, type: 3}
       propertyPath: patrolPoints.Array.data[0]
       value: 
       objectReference: {fileID: 393357618}
@@ -16600,10 +16592,6 @@ PrefabInstance:
       value: Blind_Enemy (1)
       objectReference: {fileID: 0}
     - target: {fileID: 707632396696934170, guid: 44b0c6659d90ca6478b1ca813c81045d, type: 3}
-      propertyPath: patrolPoints.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 707632396696934170, guid: 44b0c6659d90ca6478b1ca813c81045d, type: 3}
       propertyPath: patrolPoints.Array.data[0]
       value: 
       objectReference: {fileID: 1405909518}
@@ -16611,10 +16599,6 @@ PrefabInstance:
       propertyPath: patrolPoints.Array.data[1]
       value: 
       objectReference: {fileID: 329378205}
-    - target: {fileID: 707632396696934170, guid: 44b0c6659d90ca6478b1ca813c81045d, type: 3}
-      propertyPath: findPatrolPoints
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 707632396696934175, guid: 44b0c6659d90ca6478b1ca813c81045d, type: 3}
       propertyPath: m_LocalPosition.x
       value: 5.981162

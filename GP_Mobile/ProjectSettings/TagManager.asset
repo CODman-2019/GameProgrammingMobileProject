@@ -13,6 +13,8 @@ TagManager:
   - PatrolPoints
   - Sound
   - Director
+  - Hint
+  - Passage
   layers:
   - Default
   - TransparentFX
