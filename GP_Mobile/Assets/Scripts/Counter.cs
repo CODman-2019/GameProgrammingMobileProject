@@ -32,7 +32,9 @@ public class Counter : MonoBehaviour
 
     public void UpdateHealthBar(float value)
     {
-        //hpBar.value = player.health;
+        //check if the value is greater than the max value
+        if (value > hpBar.maxValue)
+            value = hpBar.maxValue;
         hpBar.value = value;
     }
 

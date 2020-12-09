@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class Gate : MonoBehaviour
 {
     public GameObject[] keys;
-    public Text messasge;
+    private Text infoBox;
     bool closed;
     bool missing;
     int missed;
@@ -16,6 +16,8 @@ public class Gate : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        infoBox = GameObject.FindGameObjectWithTag("Hint").GetComponent<Text>();
+
         closed = true;
         missing = true;
     }
@@ -60,13 +62,13 @@ public class Gate : MonoBehaviour
             {
                 //if there are still missing keys, send a message to player
                 case (true):
-                    if(missed ==  1) messasge.text = "you are missing a key";
-                    else messasge.text = "you are missing "+ missed +" keys"  ;
+                    if(missed ==  1) infoBox.text = "you are missing a key";
+                    else infoBox.text = "you are missing "+ missed +" keys"  ;
                     break;
 
                 //if not, chang closed to false
                 case (false):
-                    messasge.text = "door is now opened";
+                    infoBox.text = "door is now opened";
                     closed = false;
                     break;
             }

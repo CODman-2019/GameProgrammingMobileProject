@@ -21,7 +21,6 @@ public class Player : MonoBehaviour
     public int scraps;
     [HideInInspector]
     public int meds;
-    [HideInInspector]
     public Passages passageWay = null;
 
     // UI elements used to update information for user
@@ -139,12 +138,12 @@ public class Player : MonoBehaviour
             passageWay.ShowCost();
         }
     }
-    private void OnTriggerExit(Collider other)
-    {
-        if(passageWay != null) passageWay.infobox.text = "";
-            passageWay = null;
+    //private void OnTriggerExit(Collider other)
+    //{
+    //    if(passageWay != null) passageWay.infobox.text = "";
+    //        passageWay = null;
         
-    }
+    //}
 
 
     // Save/Load methods
@@ -195,6 +194,28 @@ public class Player : MonoBehaviour
 
     }
 
+    public void Erase()
+    {
+        if(File.Exists(Application.persistentDataPath + "/PlayerData.dat"))
+        {
+            BinaryFormatter bf = new BinaryFormatter();
+            FileStream file = File.Create(Application.persistentDataPath + "/PlayerData.dat");
+
+            PlayerData data = new PlayerData
+            {
+                //data being stored
+                currentRank = 0,
+                currentExp = 0,
+                currentNextRank = 0,
+                currentScraps = 0,
+                currentMeds = 0
+            };
+
+            bf.Serialize(file, data);
+            file.Close();
+        }
+        health = 100;
+    }
 
 }
 

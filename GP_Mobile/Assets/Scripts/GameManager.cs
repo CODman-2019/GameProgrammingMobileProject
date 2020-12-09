@@ -1,7 +1,8 @@
 ﻿using System;
+using System.IO;
 using System.Collections;
 using System.Collections.Generic;
-using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
@@ -35,6 +36,13 @@ public class GameManager : MonoBehaviour
         pager.ToTitle();
     }
 
+    public void ErasePlayerData()
+    {
+        //player.Erase();
+        if(File.Exists(Application.persistentDataPath + "/PlayerData.dat"))
+            File.Delete(Application.persistentDataPath + "/PlayerData.dat");
+    }
+
     public void GoToNextLevel()
     {
         //PlayerController player = GameObject.Find("Player").GetComponent<PlayerController>();
@@ -59,8 +67,8 @@ public class GameManager : MonoBehaviour
             switch (player.UseScraps(player.passageWay.cost))
             {
                 case true:
-                    gameHints.text = "You used your scraps to fashion a tool to get open the passage";
                     player.passageWay.OpenPath();
+                    gameHints.text = "You used your scraps to fashion a tool to get open the passage";
                     break;
 
                 case false:
