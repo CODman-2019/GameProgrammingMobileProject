@@ -29,9 +29,8 @@ public class Key : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            other.gameObject.GetComponent<Player>().AddExp(5);
-
             this.enabled = false;
+            other.gameObject.GetComponent<Player>().AddExp(5);
             this.GetComponent<MeshRenderer>().enabled = false;
             pickedUp = true;
         }

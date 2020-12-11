@@ -47,7 +47,7 @@ public class Gate : MonoBehaviour
     void Update()
     {
         //if the gate is not closed, move gate
-        if(!closed) transform.Translate(open, 0,0);
+        if(!closed) transform.Translate( 0,open,0);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -70,6 +70,8 @@ public class Gate : MonoBehaviour
                 case (false):
                     infoBox.text = "door is now opened";
                     closed = false;
+                    Player player = GameObject.Find("Player").GetComponent<Player>();
+                    player.AddExp(5*keys.Length);
                     break;
             }
         }

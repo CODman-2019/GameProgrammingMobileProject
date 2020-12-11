@@ -24,6 +24,7 @@ public class GoalTrigger : MonoBehaviour
             //if it is set for the next level, load the next scene.
             if (ToNextLevel)
             {
+                GameManager.control.Save();
                 Player player = other.gameObject.GetComponent<Player>();
                 player.AddExp(15);
                 GameManager.control.GoToNextLevel();

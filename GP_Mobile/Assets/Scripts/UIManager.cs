@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class UIManager : MonoBehaviour
 {
-    public static UIManager screen = null;
-    private SceneManageMent director;
+    public static UIManager screen;
+    //private SceneManageMent director;
     public GameObject titleScreen;
     public GameObject mainMenuScreen;
     public GameObject gamePlayScreen;
@@ -32,7 +32,7 @@ public class UIManager : MonoBehaviour
             DontDestroyOnLoad(gameObject);
             screen = this;
         }
-        else if(screen != null)
+        else
         {
             Destroy(gameObject);
         }
@@ -41,7 +41,7 @@ public class UIManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        director = GameObject.FindGameObjectWithTag("Director").GetComponent<SceneManageMent>();
+        //director = GameObject.FindGameObjectWithTag("Director").GetComponent<SceneManageMent>();
 
         titleScreen.SetActive(false);
         mainMenuScreen.SetActive(false);
@@ -85,7 +85,6 @@ public class UIManager : MonoBehaviour
         MakePrevious();
         current = Screens.Title;
         Screenchange();
-        director.LoadTitleScene();
     }
 
     public void ToMainMenu()
@@ -93,7 +92,6 @@ public class UIManager : MonoBehaviour
         MakePrevious();
         current = Screens.MainMenu;
         Screenchange();
-        director.LoadMainScene();
     }
 
     public void ToGameplay()

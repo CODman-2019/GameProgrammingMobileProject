@@ -238,7 +238,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   findPatrolPoints: 0
-  searchDuration: 10
+  searchDuration: 5
   rangeDistance: 16
 --- !u!54 &707632396696934160
 Rigidbody:

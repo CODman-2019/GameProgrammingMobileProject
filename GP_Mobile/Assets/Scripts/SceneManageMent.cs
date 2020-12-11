@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class SceneManageMent : MonoBehaviour
 {
+    public static SceneManageMent direction;
 
     [HideInInspector]
     int TitleScreen = 0;
@@ -19,8 +20,6 @@ public class SceneManageMent : MonoBehaviour
 
     [HideInInspector]
     public int Level = 0;
-    Player player;
-    public static SceneManageMent direction = null;
 
     private void Awake()
     {

@@ -9,7 +9,7 @@ using UnityEngine.UI;
 public class Player : MonoBehaviour
 {
     public float health;
-    float maxHealth;
+    float maxHealth = 100;
 
     [HideInInspector]
     public int rank;
@@ -31,34 +31,25 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Load();
-
+        //Load();
+        GameManager.control.Load();
         counters = GameObject.Find("Counters").GetComponent<Counter>();
 
         CheckExp();
-        counters.UpdateHealthBar(health);
-        counters.UpdateMedCounter(meds);
-        counters.UpdateScrapCounter(scraps);
-        counters.UpdateRankText(rank);
+
+        counters.UpdateHealthBar(this);
+        counters.UpdateMedCounter(this);
+        counters.UpdateScrapCounter(this);
+        counters.UpdateRankText(this);
         counters.UpdateEXPText(this);
 
-        //levelText = GameObject.Find("PlayerLevel").GetComponent<Text>();
-        //ExpText = GameObject.Find("EXPText").GetComponent<Text>();
-        //levelText.text = "Lv: "+ rank.ToString();
-        //ExpText.text = currentExp.ToString() + " / " + nextRank.ToString() + " EXP";
     }
-
-    //public void ResetPlayerHealth()
-    //{
-    //    health = GlobalSettings.gameData.health;
-    //}
-
 
 
     public void TakeDamage(float damage)
     {
         health -= damage;
-        counters.UpdateHealthBar(health);
+        counters.UpdateHealthBar(this);
 
         if(health < 0)
         {
@@ -67,29 +58,35 @@ public class Player : MonoBehaviour
     }
 
     //variables to adjust experience and currency
-
     public void AddScraps(int collected)
     {
         scraps += collected;
-        counters.UpdateScrapCounter(scraps);
+        counters.UpdateScrapCounter(this);
     }
+
     public void AddMed(int collected)
     {
         meds += collected;
-        counters.UpdateMedCounter(meds);
+        counters.UpdateMedCounter(this);
     }
+
     public void AddExp(int expAquired)
     {
         currentExp += expAquired;
         CheckExp();
     }
+
     public void HealPlayer()
     {
+        if (health < maxHealth) 
         if(meds >= 10)
         {
             health += 20;
             UseMeds(10);
-            counters.UpdateHealthBar(health);
+
+            if (health > maxHealth) health = maxHealth;
+
+            counters.UpdateHealthBar(this);
         }
     }
 
@@ -98,7 +95,7 @@ public class Player : MonoBehaviour
         if(meds >= medsUsed)
         {
             meds -= 10;
-            counters.UpdateMedCounter(meds);
+            counters.UpdateMedCounter(this);
         }
     }
 
@@ -107,7 +104,7 @@ public class Player : MonoBehaviour
         if(scraps >= scrapsUsed)
         {
             scraps -= scrapsUsed;
-            counters.UpdateScrapCounter(scraps);
+            counters.UpdateScrapCounter(this);
             return true;
         }
         return false;
@@ -123,11 +120,9 @@ public class Player : MonoBehaviour
             currentExp = 0;
         }
 
-        counters.UpdateRankText(rank);
-        counters.EXPText.text = currentExp.ToString() + " / " + nextRank.ToString() + " EXP";
-        //counters.UpdateEXPText(this);
-        //levelText.text = "Lv: " + rank.ToString();
-        //ExpText.text = currentExp.ToString() + " / " + nextRank.ToString() + " EXP";
+        counters.UpdateRankText(this);
+        counters.UpdateEXPText(this);
+        //counters.EXPText.text = currentExp.ToString() + " / " + nextRank.ToString() + " EXP";
     }
 
     private void OnTriggerEnter(Collider other)
@@ -138,6 +133,11 @@ public class Player : MonoBehaviour
             passageWay.ShowCost();
         }
     }
+
+
+}
+
+//unused code
     //private void OnTriggerExit(Collider other)
     //{
     //    if(passageWay != null) passageWay.infobox.text = "";
@@ -147,84 +147,24 @@ public class Player : MonoBehaviour
 
 
     // Save/Load methods
-    public void Save()
-    {
-        BinaryFormatter bf = new BinaryFormatter();
-        FileStream file = File.Create(Application.persistentDataPath + "/PlayerData.dat");
 
-        PlayerData data = new PlayerData
-        {
-            //data being stored
-            currentRank = rank,
-            currentExp = currentExp,
-            currentNextRank = nextRank,
-            currentScraps = scraps,
-            currentMeds = meds
-        };
+    //public void Save()
+    //{
+    //    BinaryFormatter bf = new BinaryFormatter();
+    //    FileStream file = File.Create(Application.persistentDataPath + "/PlayerData.dat");
 
-        bf.Serialize(file, data);
-        file.Close();
+    //    PlayerData data = new PlayerData
+    //    {
+    //        //data being stored
+    //        currentRank = rank,
+    //        currentExp = currentExp,
+    //        currentNextRank = nextRank,
+    //        currentScraps = scraps,
+    //        currentMeds = meds
+    //    };
 
-        //GlobalSettings.gameData.CreateBackUpPlayerData();
-    }
-    public void Load()
-    {
-        if (File.Exists(Application.persistentDataPath + "/PlayerData.dat"))
-        {
-            BinaryFormatter bf = new BinaryFormatter();
-            FileStream file = File.Open(Application.persistentDataPath + "/PlayerData.dat", FileMode.Open);
+    //    bf.Serialize(file, data);
+    //    file.Close();
 
-            PlayerData data = (PlayerData)bf.Deserialize(file);
-            file.Close();
-
-           // GlobalSettings.gameData.CheckPlayerData();
-            rank = data.currentRank;
-            currentExp = data.currentExp;
-            nextRank = data.currentNextRank;
-            scraps = data.currentScraps;
-            meds = data.currentMeds;
-            
-        }
-        //otherwise SAVE current states
-        else
-        {
-            Save();
-        }
-
-
-    }
-
-    public void Erase()
-    {
-        if(File.Exists(Application.persistentDataPath + "/PlayerData.dat"))
-        {
-            BinaryFormatter bf = new BinaryFormatter();
-            FileStream file = File.Create(Application.persistentDataPath + "/PlayerData.dat");
-
-            PlayerData data = new PlayerData
-            {
-                //data being stored
-                currentRank = 0,
-                currentExp = 0,
-                currentNextRank = 0,
-                currentScraps = 0,
-                currentMeds = 0
-            };
-
-            bf.Serialize(file, data);
-            file.Close();
-        }
-        health = 100;
-    }
-
-}
-
-[Serializable]
-class PlayerData
-{
-    public int currentRank;
-    public int currentExp;
-    public int currentNextRank;
-    public int currentScraps;
-    public int currentMeds;
-}
+    //    //GlobalSettings.gameData.CreateBackUpPlayerData();
+    //}
