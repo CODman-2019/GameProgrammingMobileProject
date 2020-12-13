@@ -144,7 +144,8 @@ public class UIManager : MonoBehaviour
     {
         Player player = GameObject.Find("Player").GetComponent<Player>();
 
-        Text gameHints = GameObject.FindGameObjectWithTag("Hint").GetComponent<Text>();
+        GameObject HintDisplay = GameObject.FindGameObjectWithTag("Hint");
+        Text gameHints = HintDisplay.GetComponent<Text>();
 
         //the player is infront of the blocked passage
         if (player.passageWay != null)
@@ -165,6 +166,9 @@ public class UIManager : MonoBehaviour
         {
             gameHints.text = "there is nothing around you";
         }
+
+        HintDisplay.GetComponent<GameHintText>().ClearOutText();
+
     }
 
 }

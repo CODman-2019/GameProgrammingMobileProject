@@ -46,7 +46,6 @@ public class SaveManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        fileNum = 1;
         numText.text = fileNum.ToString();
         GetFileData();
     }
@@ -89,12 +88,15 @@ public class SaveManager : MonoBehaviour
         {
             infoData = "This file has not been created yet";
         }
+
             fileInfoText.text = infoData;
     }
 
     public void StoreSaveFile()
     {
-         saveFile = fileNum;
+        saveFile = fileNum;
+        //FileStream file = File.Create(Application.persistentDataPath + "/PlayerSave" + saveFile + ".dat");
+
     }
 
     public void SaveFile()

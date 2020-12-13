@@ -50,10 +50,12 @@ public class GameManager : MonoBehaviour
     {
         //save player data from level and load to next level
         // Save();
+        SaveManager.recorder.SaveFile();
         director.LoadNextLevel();
         pager.ToGameplay();
+        SaveManager.recorder.LoadFile();
         //Load();
-        //musician.PlayGameplay();
+        musician.PlayGameplay();
 
     }
 
@@ -71,10 +73,25 @@ public class GameManager : MonoBehaviour
         //fPlayer player = GameObject.Find("Player").GetComponent<Player>();
 
         //Save();
+        SaveManager.recorder.SaveFile();
         director.LoadMainScene();
         pager.ToMainMenu();
         musician.PlayMenu();
     }
+
+
+}
+
+//[Serializable]
+//class PlayerSaveData
+//{
+//    public float currentHealth;
+//    public int currentRank;
+//    public int currentExp;
+//    public int currentNextRank;
+//    public int currentScraps;
+//    public int currentMeds;
+//}
 
 
 
@@ -136,20 +153,6 @@ public class GameManager : MonoBehaviour
     //    if(File.Exists(Application.persistentDataPath + "/PlayerData.dat"))
     //        File.Delete(Application.persistentDataPath + "/PlayerData.dat");
     //}
-}
-
-//[Serializable]
-//class PlayerSaveData
-//{
-//    public float currentHealth;
-//    public int currentRank;
-//    public int currentExp;
-//    public int currentNextRank;
-//    public int currentScraps;
-//    public int currentMeds;
-//}
-
-
     //public void OpenPassage()
     //{
     //    Player player = GameObject.Find("Player").GetComponent<Player>();
