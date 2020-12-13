@@ -40,29 +40,23 @@ public class GameManager : MonoBehaviour
         musician.PlayMenu();
     }
 
-    public void ErasePlayerData()
+    public void QuitGame()
     {
-        //player.Erase();
-        if(File.Exists(Application.persistentDataPath + "/PlayerData.dat"))
-            File.Delete(Application.persistentDataPath + "/PlayerData.dat");
+        Application.Quit();
     }
 
     //when ever the game moves to the next level
     public void GoToNextLevel()
     {
         //save player data from level and load to next level
-        Save();
+        // Save();
         director.LoadNextLevel();
         pager.ToGameplay();
-        Load();
+        //Load();
         //musician.PlayGameplay();
 
     }
 
-    public void QuitGame()
-    {
-        Application.Quit();
-    }
 
     public void GoToTitle()
     {
@@ -74,108 +68,116 @@ public class GameManager : MonoBehaviour
     public void GoToMainMenu()
     {
         Time.timeScale = 1f;
-        Player player = GameObject.Find("Player").GetComponent<Player>();
+        //fPlayer player = GameObject.Find("Player").GetComponent<Player>();
 
-        Save();
+        //Save();
         director.LoadMainScene();
         pager.ToMainMenu();
         musician.PlayMenu();
     }
 
-    public void OpenPassage()
-    {
-        Player player = GameObject.Find("Player").GetComponent<Player>();
-
-        //the player is infront of the blocked passage
-        if(player.passageWay != null)
-        {
-            gameHints = GameObject.FindGameObjectWithTag("Hint").GetComponent<Text>();
-                    
-            switch (player.UseScraps(player.passageWay.cost))
-            {
-                case true:
-                    player.passageWay.OpenPath();
-                    gameHints.text = "You used your scraps to fashion a tool to get open the passage";
-                    break;
-
-                case false:
-                    gameHints.text = "You don't have enough scrap to use to get through";
-                    break;
-            }   
-        }
-        else
-        {
-            gameHints.text = "there is nothing around you";
-        }
-    }
-
-    public void HealPlayer()
-    {
-        GameObject.Find("Player").GetComponent<Player>().HealPlayer();
-    }
 
 
     //public void PlayerDeath() {}
-    public void Save()
-    {
-        BinaryFormatter bf = new BinaryFormatter();
-        FileStream file = File.Create(Application.persistentDataPath + "/PlayerData.dat");
+    //public void Save()
+    //{
+    //    BinaryFormatter bf = new BinaryFormatter();
+    //    FileStream file = File.Create(Application.persistentDataPath + "/PlayerData.dat");
 
-        Player player = GameObject.Find("Player").GetComponent<Player>();
+    //    Player player = GameObject.Find("Player").GetComponent<Player>();
 
-        PlayerData data = new PlayerData
-        {
-            //data being stored
-            currentHealth = player.health,
-            currentRank = player.rank,
-            currentExp = player.currentExp,
-            currentNextRank = player.nextRank,
-            currentScraps = player.scraps,
-            currentMeds = player.meds
-        };
+    //    PlayerSaveData data = new PlayerSaveData
+    //    {
+    //        //data being stored
+    //        currentHealth = player.health,
+    //        currentRank = player.rank,
+    //        currentExp = player.currentExp,
+    //        currentNextRank = player.nextRank,
+    //        currentScraps = player.scraps,
+    //        currentMeds = player.meds
+    //    };
 
-        bf.Serialize(file, data);
-        file.Close();
+    //    bf.Serialize(file, data);
+    //    file.Close();
 
-        //GlobalSettings.gameData.CreateBackUpPlayerData();
-    }
-    public void Load()
-    {
-        if (File.Exists(Application.persistentDataPath + "/PlayerData.dat"))
-        {
-            BinaryFormatter bf = new BinaryFormatter();
-            FileStream file = File.Open(Application.persistentDataPath + "/PlayerData.dat", FileMode.Open);
+    //    //GlobalSettings.gameData.CreateBackUpPlayerData();
+    //}
+    //public void Load()
+    //{
+    //    if (File.Exists(Application.persistentDataPath + "/PlayerData.dat"))
+    //    {
+    //        BinaryFormatter bf = new BinaryFormatter();
+    //        FileStream file = File.Open(Application.persistentDataPath + "/PlayerData.dat", FileMode.Open);
 
-            Player player = GameObject.Find("Player").GetComponent<Player>();
+    //        Player player = GameObject.Find("Player").GetComponent<Player>();
 
-            PlayerData data = (PlayerData)bf.Deserialize(file);
-            file.Close();
+    //        PlayerSaveData data = (PlayerSaveData)bf.Deserialize(file);
+    //        file.Close();
 
-            // GlobalSettings.gameData.CheckPlayerData();
-            player.health = data.currentHealth;
-            player.rank = data.currentRank;
-            player.currentExp = data.currentExp;
-            player.nextRank = data.currentNextRank;
-            player.scraps = data.currentScraps;
-            player.meds = data.currentMeds;
+    //        // GlobalSettings.gameData.CheckPlayerData();
+    //        player.health = data.currentHealth;
+    //        player.rank = data.currentRank;
+    //        player.currentExp = data.currentExp;
+    //        player.nextRank = data.currentNextRank;
+    //        player.scraps = data.currentScraps;
+    //        player.meds = data.currentMeds;
             
-        }
-        //otherwise SAVE current states
-        else
-        {
-            Save();
-        }
-    }
+    //    }
+    //    //otherwise SAVE current states
+    //    else
+    //    {
+    //        Save();
+    //    }
+    //}
 
+    //public void ErasePlayerData()
+    //{
+    //    //player.Erase();
+    //    if(File.Exists(Application.persistentDataPath + "/PlayerData.dat"))
+    //        File.Delete(Application.persistentDataPath + "/PlayerData.dat");
+    //}
 }
 
-[Serializable]
-class PlayerData
-{
-    public float currentHealth;
-    public int currentRank;
-    public int currentExp;
-    public int currentNextRank;
-    public int currentScraps;
-    public int currentMeds;
-}
+//[Serializable]
+//class PlayerSaveData
+//{
+//    public float currentHealth;
+//    public int currentRank;
+//    public int currentExp;
+//    public int currentNextRank;
+//    public int currentScraps;
+//    public int currentMeds;
+//}
+
+
+    //public void OpenPassage()
+    //{
+    //    Player player = GameObject.Find("Player").GetComponent<Player>();
+
+    //    //the player is infront of the blocked passage
+    //    if(player.passageWay != null)
+    //    {
+    //        gameHints = GameObject.FindGameObjectWithTag("Hint").GetComponent<Text>();
+                    
+    //        switch (player.UseScraps(player.passageWay.cost))
+    //        {
+    //            case true:
+    //                player.passageWay.OpenPath();
+    //                gameHints.text = "You used your scraps to fashion a tool to get open the passage";
+    //                break;
+
+    //            case false:
+    //                gameHints.text = "You don't have enough scrap to use to get through";
+    //                break;
+    //        }   
+    //    }
+    //    else
+    //    {
+    //        gameHints.text = "there is nothing around you";
+    //    }
+    //}
+
+    //public void HealPlayer()
+    //{
+    //    GameObject.Find("Player").GetComponent<Player>().HealPlayer();
+    //}

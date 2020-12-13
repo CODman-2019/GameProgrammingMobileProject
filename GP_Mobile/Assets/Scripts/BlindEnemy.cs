@@ -12,7 +12,7 @@ public class BlindEnemy : Enemy
 
     public GameObject[] patrolPoints;
     int patrolIndex;
-    NavMeshAgent agent;
+    NavMeshAgent agent;                     
 
     public bool findPatrolPoints;
     bool reverse;

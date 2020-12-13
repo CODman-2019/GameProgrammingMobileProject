@@ -15,6 +15,7 @@ TagManager:
   - Director
   - Hint
   - Passage
+  - SaveInfo
   layers:
   - Default
   - TransparentFX

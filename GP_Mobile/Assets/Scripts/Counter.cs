@@ -18,38 +18,46 @@ public class Counter : MonoBehaviour
     //    player = GameObject.Find("Player").GetComponent<Player>();
     //}
 
-    public void UpdateScrapCounter(Player player)
+    private void FixedUpdate()
     {
-        //Player player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+        UpdateScrapCounter();
+        UpdateEXPText();
+        UpdateHealthBar();
+        UpdateMedCounter();
+        UpdateRankText();
+    }
+
+    public void UpdateScrapCounter()
+    {
+        Player player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         //scrapsCounter.text = player.scraps.ToString();
         scrapsCounter.text = player.scraps.ToString();
     }
 
-    public void UpdateMedCounter(Player player)
+    public void UpdateMedCounter()
     {
-        //Player player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+        Player player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         //medsCounter.text = player.meds.ToString();
         medsCounter.text = player.meds.ToString();
     }
 
-    public void UpdateHealthBar(Player player)
+    public void UpdateHealthBar()
     {
-        //Player player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
-        //check if the value is greater than the max value
-        //if (value > hpBar.maxValue)
-        //    value = hpBar.maxValue;
+        Player player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+        
         hpBar.value = player.health;
     }
 
-    public void UpdateRankText(Player player)
+    public void UpdateRankText()
     {
-        //Player player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+        Player player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         RankText.text = "Rank: " + player.rank.ToString();
     }
 
-    public void UpdateEXPText(Player player)
+    public void UpdateEXPText()
     {
-        //Player player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+        Player player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+        player.CheckExp();
         EXPText.text = player.currentExp.ToString() + " / " + player.nextRank.ToString() + " EXP";
     }
 }

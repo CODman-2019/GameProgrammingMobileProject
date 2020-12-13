@@ -4,24 +4,24 @@ using UnityEngine;
 
 public class AudioManager : MonoBehaviour
 {
-    //public static AudioManager composer;
+    public static AudioManager composer;
 
     public AudioSource menuMusic;
     public AudioSource gameplayMusic;
     // Start is called before the first frame update
 
-    //private void Awake()
-    //{
-    //    if(composer == null)
-    //    {
-    //        DontDestroyOnLoad(gameObject);
-    //        composer = this;
-    //    }
-    //    else
-    //    {
-    //        Destroy(gameObject);
-    //    }
-    //}
+    private void Awake()
+    {
+        if (composer == null)
+        {
+            DontDestroyOnLoad(gameObject);
+            composer = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
 
     public void PlayMenu()
     {

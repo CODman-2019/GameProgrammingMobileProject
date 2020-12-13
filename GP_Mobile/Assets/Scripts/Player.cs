@@ -32,16 +32,16 @@ public class Player : MonoBehaviour
     void Start()
     {
         //Load();
-        GameManager.control.Load();
+        SaveManager.recorder.LoadFile();
         counters = GameObject.Find("Counters").GetComponent<Counter>();
 
         CheckExp();
 
-        counters.UpdateHealthBar(this);
-        counters.UpdateMedCounter(this);
-        counters.UpdateScrapCounter(this);
-        counters.UpdateRankText(this);
-        counters.UpdateEXPText(this);
+        counters.UpdateHealthBar();
+        counters.UpdateMedCounter();
+        counters.UpdateScrapCounter();
+        counters.UpdateRankText();
+        counters.UpdateEXPText();
 
     }
 
@@ -49,7 +49,7 @@ public class Player : MonoBehaviour
     public void TakeDamage(float damage)
     {
         health -= damage;
-        counters.UpdateHealthBar(this);
+        counters.UpdateHealthBar();
 
         if(health < 0)
         {
@@ -61,19 +61,19 @@ public class Player : MonoBehaviour
     public void AddScraps(int collected)
     {
         scraps += collected;
-        counters.UpdateScrapCounter(this);
+        //counters.UpdateScrapCounter();
     }
 
     public void AddMed(int collected)
     {
         meds += collected;
-        counters.UpdateMedCounter(this);
+        //counters.UpdateMedCounter();
     }
 
     public void AddExp(int expAquired)
     {
         currentExp += expAquired;
-        CheckExp();
+        //CheckExp();
     }
 
     public void HealPlayer()
@@ -86,7 +86,7 @@ public class Player : MonoBehaviour
 
             if (health > maxHealth) health = maxHealth;
 
-            counters.UpdateHealthBar(this);
+            //counters.UpdateHealthBar();
         }
     }
 
@@ -95,7 +95,7 @@ public class Player : MonoBehaviour
         if(meds >= medsUsed)
         {
             meds -= 10;
-            counters.UpdateMedCounter(this);
+            //counters.UpdateMedCounter();
         }
     }
 
@@ -104,14 +104,14 @@ public class Player : MonoBehaviour
         if(scraps >= scrapsUsed)
         {
             scraps -= scrapsUsed;
-            counters.UpdateScrapCounter(this);
+            //counters.UpdateScrapCounter();
             return true;
         }
         return false;
     }
 
     //checks if player ranks up
-    private void CheckExp()
+    public void CheckExp()
     {
         if (currentExp >= nextRank)
         {
@@ -120,9 +120,9 @@ public class Player : MonoBehaviour
             currentExp = 0;
         }
 
-        counters.UpdateRankText(this);
-        counters.UpdateEXPText(this);
-        //counters.EXPText.text = currentExp.ToString() + " / " + nextRank.ToString() + " EXP";
+        //counters.UpdateRankText();
+        //counters.UpdateEXPText();
+        
     }
 
     private void OnTriggerEnter(Collider other)

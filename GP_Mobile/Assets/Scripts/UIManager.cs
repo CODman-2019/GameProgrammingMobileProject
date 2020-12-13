@@ -1,12 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
     public static UIManager screen;
-    //private SceneManageMent director;
+
     public GameObject titleScreen;
+    public GameObject SaveScreen;
     public GameObject mainMenuScreen;
     public GameObject gamePlayScreen;
     public GameObject pauseScreen;
@@ -14,6 +16,7 @@ public class UIManager : MonoBehaviour
     enum Screens
     {
         Title,
+        Save,
         MainMenu,
         GamePlay,
         Pause
@@ -23,6 +26,8 @@ public class UIManager : MonoBehaviour
 
     GameObject previousScreen;
     GameObject currentScreen;
+
+    //Counter counters;
 
     //used if outside game manager
     private void Awake()
@@ -44,6 +49,7 @@ public class UIManager : MonoBehaviour
         //director = GameObject.FindGameObjectWithTag("Director").GetComponent<SceneManageMent>();
 
         titleScreen.SetActive(false);
+        SaveScreen.SetActive(false);
         mainMenuScreen.SetActive(false);
         gamePlayScreen.SetActive(false);
         pauseScreen.SetActive(false);
@@ -60,6 +66,9 @@ public class UIManager : MonoBehaviour
         {
             case Screens.Title:
                 currentScreen = titleScreen;
+                break;
+            case Screens.Save:
+                currentScreen = SaveScreen;
                 break;
             case Screens.MainMenu:
                 currentScreen = mainMenuScreen;
@@ -84,6 +93,13 @@ public class UIManager : MonoBehaviour
     {
         MakePrevious();
         current = Screens.Title;
+        Screenchange();
+    }
+
+    public void ToSave()
+    {
+        MakePrevious();
+        current = Screens.Save;
         Screenchange();
     }
 
@@ -115,6 +131,40 @@ public class UIManager : MonoBehaviour
         Time.timeScale = 1f;
         current = Screens.GamePlay;
         Screenchange();
+    }
+
+
+
+    public void Heal()
+    {
+        GameObject.FindGameObjectWithTag("Player").GetComponent<Player>().HealPlayer();
+    }
+
+    public void RemoveBlockage()
+    {
+        Player player = GameObject.Find("Player").GetComponent<Player>();
+
+        Text gameHints = GameObject.FindGameObjectWithTag("Hint").GetComponent<Text>();
+
+        //the player is infront of the blocked passage
+        if (player.passageWay != null)
+        {
+            switch (player.UseScraps(player.passageWay.cost))
+            {
+                case true:
+                    player.passageWay.OpenPath();
+                    gameHints.text = "You used your scraps to fashion a tool to get open the passage";
+                    break;
+
+                case false:
+                    gameHints.text = "You don't have enough scrap to use to get through";
+                    break;
+            }
+        }
+        else
+        {
+            gameHints.text = "there is nothing around you";
+        }
     }
 
 }
